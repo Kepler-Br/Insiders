@@ -1,0 +1,27 @@
+#sideBar
+{
+    background-color: #d3dad1;
+    margin-top: 56px;
+    float: left;
+    height: 100%;
+    box-sizing: border-box;
+    position: fixed;
+    width: 192px;
+    border-right: 1px solid #8a9f84;
+    padding: 10px;
+}
+
+.sidebar_element
+{
+    color: #00428a;
+    font-size: 90%;
+    padding-top: 1px;
+    padding-bottom: 1px;
+}
+
+.sidebar_element:hover
+{
+    background-color: #00428a;
+    border-radius: 3px;
+    color: #d3dad1;
+}

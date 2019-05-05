@@ -1,0 +1,16 @@
+{% extends "main_template.html" %}
+{% load static %}
+
+{% block title %}
+Tag list - {{ block.super }}
+{% endblock %}
+
+{% block includes %}
+    <link rel="stylesheet" href="{% static 'css/user_post.css' %}">
+{% endblock %}
+
+{% block content %}
+    {% for tag in tags %}
+        <a class="tag_link" href="#">#{{ tag.tag_name }}</a>
+    {% endfor %}
+{% endblock %}

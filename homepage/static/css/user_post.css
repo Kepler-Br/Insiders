@@ -1,0 +1,14 @@
+.user_post
+{
+    background-color: #eaefe8;
+
+}
+
+.tag_link
+{
+    display: inline;
+    background-color: #eaefe8;
+    border-radius: 3px;
+    padding: 2px;
+    margin-left: 3px;
+}
