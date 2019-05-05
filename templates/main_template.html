@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>
+        {% block title %}
+        Insider
+        {% endblock %}
+    </title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+            integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+            crossorigin="anonymous"></script>
+    <link rel="shortcut icon" href="{% static 'images/favicon.ico' %}"/>
+</head>
+<body style="background: #ccd9c8">
+
+    <div id="navigation_bar" style="position: fixed; width: 100%;">
+        {% include "navbar.html" %}
+    </div>
+    <div id="page_layout">
+        <div id="side_bar" style="background-color: #d3dad1;
+        margin-top: 56px; float: left; height: 100%; box-sizing: border-box; position: fixed; width: 192px;">
+            {% include "side_bar.html" %}
+        </div>
+
+        <div id="page_body" style="display: block; padding-left: 202px; padding-top: 56px;">
+            {% block content %}
+            If you see this, you shouldn't.
+            {% endblock %}
+        </div>
+    </div>
+</body>
+</html>
