@@ -1,0 +1,33 @@
+{% extends "main_template.html" %}
+{% load static %}
+
+{% block title %}
+User posts - {{ block.super }}
+{% endblock %}
+
+{% block includes %}
+    <link rel="stylesheet" href="{% static 'css/user_post.css' %}">
+{% endblock %}
+
+{% block content %}
+    <div class="post_card" style="padding: 1%; width: 98%; margin: auto">
+        <div class="card user_post" style="padding: 1%;">
+            <div class="card-header">
+                <h4>{{ post.title }}</h4>
+            </div>
+            <div class="card-body">
+                <p class="card-text" style="text-align: justify">{{ post.body}}</p>
+                <div class="text-muted" style="margin-top: 2%">
+                    Posted at {{ post.date_pub|date:"Y/m/d G:i:s" }}
+                </div>
+            </div>
+                <div class="card-footer">
+                    Tags: {% if post.post_tags.all|length == 0 %}no tags{% endif %}
+                    {% for tag in post.post_tags.all %}
+                        <a class="tag_link" href="#">#{{tag.tag_name}}</a>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
