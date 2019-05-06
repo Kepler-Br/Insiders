@@ -4,38 +4,39 @@ from django import forms
 from django.utils.text import slugify
 import time
 import base64
+import re
 
 
-class MultiValueTextWidget(forms.TextInput):
-    def _get_value(self, value):
-        return " ".join(value)
+class CommentForm(forms.Widget):
+    input_type = 'select'  # Subclasses must define this.
+    template_name = 'django/forms/widgets/text.html'
 
-    def _format_value(self, value):
-        if self.is_localized:
-            return formats.localize_input(self._get_value(value))
-        return self._get_value(value)
+    def __init__(self, attrs=None):
+        if attrs is not None:
+            attrs = attrs.copy()
+            self.input_type = attrs.pop('type', self.input_type)
+        super().__init__(attrs)
+
+    def get_context(self, name, value, attrs):
+        context = super().get_context(name, value, attrs)
+        context['widget']['type'] = self.input_type
+        return context
 
 
 class PostForm(forms.ModelForm):
     class Meta:
         model = Post
-        fields = ["title", "slug", "body", "post_tags"]
+        fields = ["title", "slug", "body"]
 
         widgets = {
             'title': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Post title'}),
             'slug': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Post URL'}),
             'body': forms.Textarea(attrs={'class': 'form-control', 'placeholder': 'Post body'}),
-            'post_tags': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Post tags'}),
         }
 
     def __init__(self, *args, **kwargs):
-
-        # print(dir(self.fields['post_tags']))
-        # self.fields['post_tags'] = args['post_tags']
-        print(args[0]["post_tags"])
         super(PostForm, self).__init__(*args, **kwargs)
         self.fields['slug'].required = False
-        self.fields['post_tags'].required = False
 
     def clean_slug(self):
         new_slug = slugify(self.cleaned_data['slug'])
@@ -47,12 +48,23 @@ class PostForm(forms.ModelForm):
         else:
             return f"{new_slug}-{timestamp_base64_str}"
 
-    def clean_post_tags(self):
-        hashtags = self.cleaned_data['post_tags']
-        if len(hashtags) == 0:
-            return hashtags
-        for hashtag in hashtags.split(' '):
-            print(hashtag)
-        raise ValidationError("Tag is not correct.")
-        if '#' not in tags:
-            raise ValidationError("Tag is not correct.")
+    def process_youtube_tag(self, body: str):
+
+
+    def clean_body(self):
+        new_body = self.cleaned_data['body']
+        new_body += """<div class="embed-responsive embed-responsive-4by3">
+                       <iframe class="embed-responsive-item" src="..."></iframe>
+                       </div>"""
+        return new_body
+
+    # def clean_post_tags(self):
+    #     print(self.cleaned_data['post_tags'])
+    #     # hashtags = self.cleaned_data['post_tags']
+    #     # if len(hashtags) == 0:
+    #     #     return hashtags
+    #     # for hashtag in hashtags.split(' '):
+    #     #     print(hashtag)
+    #     raise ValidationError("Tag is not correct.")
+    #     if '#' not in tags:
+    #         raise ValidationError("Tag is not correct.")

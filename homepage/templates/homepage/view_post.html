@@ -16,7 +16,7 @@ User posts - {{ block.super }}
                 <h4>{{ post.title }}</h4>
             </div>
             <div class="card-body">
-                <p class="card-text" style="text-align: justify">{{ post.body}}</p>
+                <p class="card-text" style="text-align: justify">{{ post.body|safe }}</p>
                 <div class="text-muted" style="margin-top: 2%">
                     Posted at {{ post.date_pub|date:"Y/m/d G:i:s" }}
                 </div>
