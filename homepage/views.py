@@ -1,7 +1,9 @@
 from django.shortcuts import render
+from django.shortcuts import redirect
 from .models import *
+from .forms import *
 from django.views.generic import View
-from django.shortcuts import get_object_or_404
+# from django.shortcuts import get_object_or_404
 # Create your views here.
 
 
@@ -21,6 +23,19 @@ class ViewPost(View):
     def get(self, request, slug):
         post = Post.objects.get(slug=slug)
         return render(request, "homepage/view_post.html", context={"post": post})
+
+
+class PostCreate(View):
+    def get(self, request):
+        form = PostForm()
+        return render(request, "homepage/new_post.html", context={"form": form})
+
+    def post(self, request):
+        bound_form = PostForm(request.POST)
+        if bound_form.is_valid():
+            new_post = bound_form.save()
+            return redirect(new_post)
+        return render(request, "homepage/new_post.html", context={"form": bound_form})
 
 
 class RegistrationRequest(View):

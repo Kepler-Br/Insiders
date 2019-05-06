@@ -1,0 +1,27 @@
+{% extends "main_template.html" %}
+{% load static %}
+
+{% block title %}
+    Create post - {{ block.super }}
+{% endblock %}
+
+{% block includes %}
+    <link rel="stylesheet" href="{% static 'css/user_post.css' %}">
+{% endblock %}
+
+{% block content %}
+    <div style="padding: 1%; width: 98%; margin: auto">
+        <form action="{% url 'post_create' %}" method="post">
+            {% csrf_token %}
+            {% for field in form %}
+                <div class="form-group">
+                    {{ field }}
+                    {% if field.errors %}
+                        {{ field.errors.as_text }}
+                    {% endif %}
+                </div>
+            {% endfor %}
+            <button type="submit" name="button" class="btn  btn-primary">Create</button>
+        </form>
+    </div>
+{% endblock %}
