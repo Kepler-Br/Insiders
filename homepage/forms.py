@@ -8,9 +8,9 @@ import re
 from django.utils.html import escape
 
 
-class PostBodyForm(forms.Textarea):
-    input_type = 'select'  # Subclasses must define this.
-    template_name = 'django/forms/widgets/text.html'
+class TextareaWithTags(forms.Textarea):
+    input_type = 'text'  # Subclasses must define this.
+    template_name = 'django/forms/widgets/textarea.html'
 
     def __init__(self, attrs=None):
         if attrs is not None:
@@ -19,9 +19,59 @@ class PostBodyForm(forms.Textarea):
         super().__init__(attrs)
 
     def get_context(self, name, value, attrs):
+        if value:
+            value = self.process_single_tags(escape(value))
         context = super().get_context(name, value, attrs)
         context['widget']['type'] = self.input_type
         return context
+
+    @staticmethod
+    def process_single_tags(text: str) -> str:
+        tags = TextareaWithTags.get_single_tags_from_text(text)
+        for tag in tags:
+            if "[youtube" in tag:
+                processed = TextareaWithTags.process_youtube_tag(tag)
+                text = text.replace(tag, processed)
+        return text
+
+    @staticmethod
+    def process_youtube_tag(tag: str) -> str:
+        attrs: dict = TextareaWithTags.get_attributes_from_tag(tag)
+        href = attrs.get("href")
+        if not href:
+            return tag
+
+        link_matched = re.match(r"(https?:\/\/)?(www\.)?youtube\.com\/watch\?v=(\w+)", href)
+        if not link_matched:
+            return tag
+        video_link = link_matched[3]
+
+        style = ""
+        size_attr = attrs.get("size")
+        if size_attr:
+            size_match = re.match(r"(\d+)(px|%)", size_attr)
+            if size_match:
+                size_number = size_match[1]
+                size_units = size_match[2]
+                style += f"""width:{size_number}{size_units};"""
+
+        return f"""<div class="embed-responsive embed-responsive-4by3" style="{style}">
+               <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/{video_link}"></iframe>
+               </div>"""
+
+
+    @staticmethod
+    def get_single_tags_from_text(text: str) -> list:
+        return re.findall(r"(\[\w+ [\w\d \/:=\?\.%\"]+\/\])", text)
+
+    @staticmethod
+    def get_attributes_from_tag(tag: str) -> dict:
+        found = re.findall(r"(\w+)=\"([\w\d \/:=\?\.%]+)\"", tag)
+        attributes = {}
+        for key, value in found:
+            attributes[key] = value
+        return attributes
+
 
 
 class PostForm(forms.ModelForm):
@@ -32,7 +82,7 @@ class PostForm(forms.ModelForm):
         widgets = {
             'title': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Post title'}),
             'slug': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Post URL'}),
-            'body': forms.Textarea(attrs={'class': 'form-control', 'placeholder': 'Post body'}),
+            'body': TextareaWithTags(attrs={'class': 'form-control', 'placeholder': 'Post body'}),
         }
 
     def __init__(self, *args, **kwargs):
@@ -48,52 +98,6 @@ class PostForm(forms.ModelForm):
             return timestamp_base64_str
         else:
             return f"{new_slug}-{timestamp_base64_str}"
-
-    @staticmethod
-    def get_single_tags_from_text(text: str) -> list:
-        return re.findall(r"(\[\w+[ \w=\-\?\.:\/\"%]*\/\])", text)
-
-    @staticmethod
-    def get_attrs_from_tag(pattern: str, tag: str) -> dict:
-        found = re.search(pattern, tag)
-        if found:
-            return found.groupdict()
-        else:
-            return {}
-
-    def process_youtube_tag(self, youtube_tag: str):
-        href_attr = self.get_attrs_from_tag(r"href=(https?:\/\/)?(www\.)?youtube\.com\/watch\?v=(?P<link>\w+)",
-                                            youtube_tag)
-        video_link = ""
-        if href_attr:
-            video_link = href_attr["link"]
-        else:
-            return youtube_tag
-
-        style = ""
-        size_attr = self.get_attrs_from_tag(r"size=(?P<size_num>\d+)(?P<size_units>px|%)", youtube_tag)
-        if size_attr:
-            style += f"""width: {size_attr["size_num"]}{size_attr["size_units"]};"""
-
-
-        return f"""<div class="embed-responsive embed-responsive-4by3" style="{style}">
-           <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/{video_link}"></iframe>
-           </div>"""
-
-    @staticmethod
-    def escape_html_tags(text: str) -> str:
-        return text.replace("<", "&lt;").replace(">", "&gt;").replace("\'", "&#39;").replace("\"", "&quot;")\
-            .replace("&", "&amp;")
-
-    def clean_body(self):
-        new_body = escape(self.cleaned_data['body'])
-        single_tags = self.get_single_tags_from_text(new_body)
-        for tag in single_tags:
-            if "[youtube" in tag:
-                processed_tag = self.process_youtube_tag(tag)
-                new_body = \
-                    new_body.replace(tag, processed_tag)
-        return new_body
 
     # def clean_post_tags(self):
     #     print(self.cleaned_data['post_tags'])
