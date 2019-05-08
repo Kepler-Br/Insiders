@@ -8,35 +8,19 @@ import re
 from django.utils.html import escape
 
 
-class TextareaWithTags(forms.Textarea):
-    input_type = 'text'  # Subclasses must define this.
-    template_name = 'django/forms/widgets/textarea.html'
-
-    def __init__(self, attrs=None):
-        if attrs is not None:
-            attrs = attrs.copy()
-            self.input_type = attrs.pop('type', self.input_type)
-        super().__init__(attrs)
-
-    def get_context(self, name, value, attrs):
-        if value:
-            value = self.process_single_tags(escape(value))
-        context = super().get_context(name, value, attrs)
-        context['widget']['type'] = self.input_type
-        return context
-
+class SingleTagProcessor:
     @staticmethod
-    def process_single_tags(text: str) -> str:
-        tags = TextareaWithTags.get_single_tags_from_text(text)
+    def process(text: str) -> str:
+        tags = SingleTagProcessor.get_single_tags_from_text(text)
         for tag in tags:
             if "[youtube" in tag:
-                processed = TextareaWithTags.process_youtube_tag(tag)
+                processed = SingleTagProcessor.process_youtube_tag(tag)
                 text = text.replace(tag, processed)
         return text
 
     @staticmethod
     def process_youtube_tag(tag: str) -> str:
-        attrs: dict = TextareaWithTags.get_attributes_from_tag(tag)
+        attrs: dict = SingleTagProcessor.get_attributes_from_tag(tag)
         href = attrs.get("href")
         if not href:
             return tag
@@ -59,7 +43,6 @@ class TextareaWithTags(forms.Textarea):
                <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/{video_link}"></iframe>
                </div>"""
 
-
     @staticmethod
     def get_single_tags_from_text(text: str) -> list:
         return re.findall(r"(\[\w+ [\w\d \/:=\?\.%\"]+\/\])", text)
@@ -73,16 +56,45 @@ class TextareaWithTags(forms.Textarea):
         return attributes
 
 
+class TextareaWithTags(forms.Textarea):
+    input_type = 'text'  # Subclasses must define this.
+    template_name = 'django/forms/widgets/textarea.html'
+
+    def __init__(self, attrs=None):
+        if attrs is not None:
+            attrs = attrs.copy()
+            self.input_type = attrs.pop('type', self.input_type)
+        super().__init__(attrs)
+
+    def get_context(self, name, value, attrs):
+        print(value)
+        context = super().get_context(name, value, attrs)
+        context['widget']['type'] = self.input_type
+        return context
+
+    def value_from_datadict(self, data, files, name):
+        widget_data = data.get(name)
+        if not widget_data:
+            return ""
+        result = SingleTagProcessor.process(widget_data)
+        print("rrr")
+        return result
+
+
+
+
 
 class PostForm(forms.ModelForm):
     class Meta:
         model = Post
-        fields = ["title", "slug", "body"]
+        fields = ["title", "slug", "short_body", "body", "post_tags"]
 
         widgets = {
             'title': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Post title'}),
-            'slug': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Post URL'}),
+            'slug': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Post URL (optional)'}),
+            'short_body': TextareaWithTags(attrs={'class': 'form-control', 'placeholder': 'Short post body (optional)'}),
             'body': TextareaWithTags(attrs={'class': 'form-control', 'placeholder': 'Post body'}),
+            'post_tags': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Post tags (optional)'}),
         }
 
     def __init__(self, *args, **kwargs):
