@@ -77,11 +77,20 @@ class TextareaWithTags(forms.Textarea):
         if not widget_data:
             return ""
         result = SingleTagProcessor.process(widget_data)
-        print("rrr")
         return result
 
+class PostForm(forms.ModelForm):
+    class Meta:
+        model = FUCKME
+        fields = ["email", "password", "firstname", "username", "about"]
 
-
+        widgets = {
+            "email": forms.EmailField(attrs={'class': 'form-control', 'placeholder': 'Post title'}),
+            "password": forms.PasswordInput(attrs={'class': 'form-control', 'placeholder': 'Post title'}),
+            "firstname": forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Post title'}),
+            "username": forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Post title'}),
+            "about": forms.Textarea(attrs={'class': 'form-control', 'placeholder': 'Post title'})
+        }
 
 
 class PostForm(forms.ModelForm):
@@ -111,13 +120,7 @@ class PostForm(forms.ModelForm):
         else:
             return f"{new_slug}-{timestamp_base64_str}"
 
-    # def clean_post_tags(self):
-    #     print(self.cleaned_data['post_tags'])
-    #     # hashtags = self.cleaned_data['post_tags']
-    #     # if len(hashtags) == 0:
-    #     #     return hashtags
-    #     # for hashtag in hashtags.split(' '):
-    #     #     print(hashtag)
-    #     raise ValidationError("Tag is not correct.")
-    #     if '#' not in tags:
-    #         raise ValidationError("Tag is not correct.")
+    # def clean_short_body(self):
+    #     new_short_body = self.cleaned_data['short_body']
+    #     if not new_short_body:
+
