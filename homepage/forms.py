@@ -5,6 +5,7 @@ from django.utils.text import slugify
 import time
 import base64
 import re
+from django.contrib.auth.models import User
 from django.utils.html import escape
 
 
@@ -79,19 +80,6 @@ class TextareaWithTags(forms.Textarea):
         result = SingleTagProcessor.process(widget_data)
         return result
 
-class PostForm(forms.ModelForm):
-    class Meta:
-        model = FUCKME
-        fields = ["email", "password", "firstname", "username", "about"]
-
-        widgets = {
-            "email": forms.EmailField(attrs={'class': 'form-control', 'placeholder': 'Post title'}),
-            "password": forms.PasswordInput(attrs={'class': 'form-control', 'placeholder': 'Post title'}),
-            "firstname": forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Post title'}),
-            "username": forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Post title'}),
-            "about": forms.Textarea(attrs={'class': 'form-control', 'placeholder': 'Post title'})
-        }
-
 
 class PostForm(forms.ModelForm):
     class Meta:
@@ -120,7 +108,34 @@ class PostForm(forms.ModelForm):
         else:
             return f"{new_slug}-{timestamp_base64_str}"
 
-    # def clean_short_body(self):
-    #     new_short_body = self.cleaned_data['short_body']
-    #     if not new_short_body:
+    def clean_short_body(self):
+        new_short_body = self.cleaned_data['short_body']
+        if new_short_body:
+            return new_short_body
+        body = self.cleaned_data['body']
+        # 1000 is maximum short_body size in DB.
+        new_short_body = body[:1000-5] + "..."
+        return new_short_body
 
+
+class RegistrationForm(forms.ModelForm):
+    class Meta:
+        model = User
+        fields = ["email", "password", "first_name", "username"]
+
+        widgets = {
+            "email": forms.EmailInput(attrs={'class': 'form-control', 'placeholder': 'Email address'}),
+            "password": forms.PasswordInput(attrs={'class': 'form-control', 'placeholder': 'Password'}),
+            "first_name": forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Firstname'}),
+            "username": forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Username'}),
+        }
+
+
+class LoginForm(forms.Form):
+    class Meta:
+        fields = ["username", "password"]
+
+        widgets = {
+            "username": forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Username or email'}),
+            "password": forms.PasswordInput(attrs={'class': 'form-control', 'placeholder': 'Password'}),
+        }

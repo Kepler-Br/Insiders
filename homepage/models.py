@@ -18,3 +18,6 @@ class Post(models.Model):
     def __str__(self):
         return self.title
 
+
+class InviteLinkList(models.Model):
+    slug = models.SlugField(max_length=15, unique=True)
