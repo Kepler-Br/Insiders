@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 # Create your models here.
 
@@ -13,3 +14,13 @@ class InviteRequests(models.Model):
     secondname = models.TextField(max_length=50, blank=True)
     contacts = models.TextField(max_length=500, blank=False)
     about = models.TextField(max_length=2000, blank=False)
+
+
+class Profile(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    image = models.ImageField(default='profile_pictures/default_avatar.png', upload_to="profile_pictures")
+    short_about = models.CharField(max_length=100)
+    status = models.CharField(max_length=256)
+
+    def __str__(self):
+        return f"{self.user.username}'s profile"
