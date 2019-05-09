@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>
+        Let me iin! - Insider
+    </title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+    <link rel="stylesheet" href="{% static 'css/wannain.css' %}" />
+    <link rel="shortcut icon" href="{% static 'images/favicon.ico' %}" />
+</head>
+
+<body id="mainContainer">
+    <div id="navigationBar" style="position: fixed; width: 100%; z-index: 100">
+        {% include "navbar.html" %}
+    </div>
+    <div id="pageBody">
+    <div id="wannainCenterbox">
+        <div class="card-header">
+            <h4>
+            Wanna be <span class="badge badge-secondary" style="background: #30ce5c; font-size: 100%">in</span><span><i>side</i></span>?
+        </h4>
+        </div>
+        <div>
+            <p><h5>Fill the form below:</h5></p>
+        </div>
+        <form action="" method="post">
+            {% csrf_token %}
+            <div class="form-group row">
+                <label for='{{ form.username.id_for_label }}' class="col-sm-4 col-form-label">{{ form.username.label }}</label>
+                <div class="col-sm-8">
+                    {{ form.username }}
+                    <small class="form-text text-muted">Your creative user name.</small>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for='{{ form.firstname.id_for_label }}' class="col-sm-4 col-form-label">{{ form.firstname.label }}</label>
+                <div class="col-sm-8">
+                    {{ form.firstname }}
+                    <small class="form-text text-muted">Your first name, please.</small>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for='{{ form.secondname.id_for_label }}' class="col-sm-4 col-form-label">{{ form.secondname.label }}</label>
+                <div class="col-sm-8">
+                    {{ form.secondname }}
+                    <small class="form-text text-muted">Your second name. This is optional.</small>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for='{{ form.contacts.id_for_label }}' class="col-sm-4 col-form-label">{{ form.contacts.label }}</label>
+                <div class="col-sm-8">
+                    {{ form.contacts }}
+                    <small class="form-text text-muted">Where can we contact with you?</small>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for='{{ form.about.id_for_label }}' class="col-sm-4 col-form-label">{{ form.about.label }}</label>
+                <div class="col-sm-8">
+                    {{ form.about }}
+                    <small class="form-text text-muted">What about you?</small>
+                </div>
+            </div>
+
+            <button type="submit" class="btn btn-primary" style="background: #30ce5c; border-color: #30ce5c">Gimme da link!</button>
+        </form>
+    </div>
+        </div>
+</body>
+</html>

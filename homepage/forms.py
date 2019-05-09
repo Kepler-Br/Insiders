@@ -5,7 +5,7 @@ from django.utils.text import slugify
 import time
 import base64
 import re
-from django.contrib.auth.models import User
+
 from django.utils.html import escape
 
 
@@ -116,26 +116,3 @@ class PostForm(forms.ModelForm):
         # 1000 is maximum short_body size in DB.
         new_short_body = body[:1000-5] + "..."
         return new_short_body
-
-
-class RegistrationForm(forms.ModelForm):
-    class Meta:
-        model = User
-        fields = ["email", "password", "first_name", "username"]
-
-        widgets = {
-            "email": forms.EmailInput(attrs={'class': 'form-control', 'placeholder': 'Email address'}),
-            "password": forms.PasswordInput(attrs={'class': 'form-control', 'placeholder': 'Password'}),
-            "first_name": forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Firstname'}),
-            "username": forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Username'}),
-        }
-
-
-class LoginForm(forms.Form):
-    class Meta:
-        fields = ["username", "password"]
-
-        widgets = {
-            "username": forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Username or email'}),
-            "password": forms.PasswordInput(attrs={'class': 'form-control', 'placeholder': 'Password'}),
-        }

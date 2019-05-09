@@ -19,5 +19,3 @@ class Post(models.Model):
         return self.title
 
 
-class InviteLinkList(models.Model):
-    slug = models.SlugField(max_length=15, unique=True)
