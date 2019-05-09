@@ -1,0 +1,25 @@
+{% extends "main_template.html" %}
+{% load static %}
+
+{% block title %}
+User posts - {{ block.super }}
+{% endblock %}
+
+{% block includes %}
+    <link rel="stylesheet" href="{% static 'css/user_post.css' %}">
+{% endblock %}
+
+{% block content %}
+
+ <!--style="padding: 1%; width: 70%; margin: auto"-->
+<div class="content-section">
+    <div class="media">
+        <img class="rounded-circle account-img" style="width:100px; height:100px;" src="{{ user.profile.image.url }}">
+        <div class="media-body">
+            <h2 class="account-heading">{{ user.username }}</h2>
+            <p class="text-secondary">{{ user.first_name }} {{ user.last_name }}</p>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

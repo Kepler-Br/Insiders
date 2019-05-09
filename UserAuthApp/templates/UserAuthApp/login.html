@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 {% load static %}
+{% load crispy_forms_tags %}
 <html lang="en">
 
 <head>
@@ -29,24 +30,7 @@
             </div>
             <form action="" method="post" style="padding-top: 10px;">
                 {% csrf_token %}
-                {% for error in form.errors.values %}
-                    <div class="alert alert-danger">
-                        {{ error }}
-                    </div>
-                {% endfor %}
-                <div class="form-group row">
-                    <label for='{{ form.username.id_for_label }}' class="col-sm-4 col-form-label">{{ form.username.label }}</label>
-                    <div class="col-sm-8">
-                        {{ form.username }}
-                    </div>
-                </div>
-                <div class="form-group row">
-                    <label for='{{ form.password.id_for_label }}' class="col-sm-4 col-form-label">{{ form.password.label }}</label>
-                    <div class="col-sm-8">
-                        {{ form.password }}
-                    </div>
-                </div>
-                <p><small class="form-text text-muted">Want to get in? <a href="{% url 'request_invite_page' %}">Ask me how.</a></small></p>
+                {{ form|crispy }}
                 <button type="submit" class="btn btn-primary" style="background: #30ce5c; border-color: #30ce5c">Login</button>
             </form>
         </div>

@@ -16,11 +16,14 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from django.urls import include
+from django.views.generic.base import RedirectView
+from django.contrib.auth.decorators import login_required
 
 urlpatterns = [
     path('', include('homepage.urls')),
     path('', include('UserAuthApp.urls')),
     path('admin/', admin.site.urls),
+    path('', RedirectView.as_view(url='home')),
 ]
 
 

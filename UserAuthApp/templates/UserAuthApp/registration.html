@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 {% load static %}
+{% load crispy_forms_tags %}
 <html lang="en">
 
 <head>
@@ -32,39 +33,40 @@
         </div>
         <form action="" method="post">
             {% csrf_token %}
-                {% for error in form.errors.values %}
-                    <div class="alert alert-danger">
-                        {{ error }}
-                    </div>
-                {% endfor %}
-            <div class="form-group row">
-                <label for='{{ form.email.id_for_label }}' class="col-sm-4 col-form-label">{{ form.email.label }}</label>
-                <div class="col-sm-8">
-                    {{ form.email }}
-                    <small class="form-text text-muted">Don't worry, it's between us.</small>
-                </div>
-            </div>
-            <div class="form-group row">
-                <label for='{{ form.password.id_for_label }}' class="col-sm-4 col-form-label">{{ form.password.label }}</label>
-                <div class="col-sm-8">
-                    {{ form.password }}
-                    <small class="form-text text-muted">Your passwords are stored as hash.</small>
-                </div>
-            </div>
-            <div class="form-group row">
-                <label for='{{ form.first_name.id_for_label }}' class="col-sm-4 col-form-label">{{ form.first_name.label }}</label>
-                <div class="col-sm-8">
-                    {{ form.first_name }}
-                    <small class="form-text text-muted">Your first name. Real one.</small>
-                </div>
-            </div>
-            <div class="form-group row">
-                <label for='{{ form.username.id_for_label }}' class="col-sm-4 col-form-label">{{ form.username.label }}</label>
-                <div class="col-sm-8">
-                    {{ form.username }}
-                    <small class="form-text text-muted">Your first name. Real one.</small>
-                </div>
-            </div>
+            {{ form|crispy }}
+                <!--{% for error in form.errors.values %}-->
+                    <!--<div class="alert alert-danger">-->
+                        <!--{{ error }}-->
+                    <!--</div>-->
+                <!--{% endfor %}-->
+            <!--<div class="form-group row">-->
+                <!--<label for='{{ form.email.id_for_label }}' class="col-sm-4 col-form-label">{{ form.email.label }}</label>-->
+                <!--<div class="col-sm-8">-->
+                    <!--{{ form.email }}-->
+                    <!--<small class="form-text text-muted">Don't worry, it's between us.</small>-->
+                <!--</div>-->
+            <!--</div>-->
+            <!--<div class="form-group row">-->
+                <!--<label for='{{ form.password.id_for_label }}' class="col-sm-4 col-form-label">{{ form.password.label }}</label>-->
+                <!--<div class="col-sm-8">-->
+                    <!--{{ form.password }}-->
+                    <!--<small class="form-text text-muted">Your passwords are stored as hash.</small>-->
+                <!--</div>-->
+            <!--</div>-->
+            <!--<div class="form-group row">-->
+                <!--<label for='{{ form.first_name.id_for_label }}' class="col-sm-4 col-form-label">{{ form.first_name.label }}</label>-->
+                <!--<div class="col-sm-8">-->
+                    <!--{{ form.first_name }}-->
+                    <!--<small class="form-text text-muted">Your first name. Real one.</small>-->
+                <!--</div>-->
+            <!--</div>-->
+            <!--<div class="form-group row">-->
+                <!--<label for='{{ form.username.id_for_label }}' class="col-sm-4 col-form-label">{{ form.username.label }}</label>-->
+                <!--<div class="col-sm-8">-->
+                    <!--{{ form.username }}-->
+                    <!--<small class="form-text text-muted">Your first name. Real one.</small>-->
+                <!--</div>-->
+            <!--</div>-->
             <button type="submit" class="btn btn-primary" style="background: #30ce5c; border-color: #30ce5c">Dive in.</button>
         </form>
     </div>

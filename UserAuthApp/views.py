@@ -30,6 +30,8 @@ class RequestInvitePage(View):
     success_template_name = "UserAuthApp/request_submitted.html"
 
     def get(self, request):
+        if request.user.is_authenticated:
+            return redirect("homepage")
         form = self.form_class()
         return render(request, self.template_name, context={"form": form})
 
@@ -53,6 +55,8 @@ class RegistrationPage(View):
             return None
 
     def get(self, request, invite_slug):
+        if request.user.is_authenticated:
+            return redirect("homepage")
         # if not self.get_invite_slug_from_db(invite_slug):
         #     return HttpResponseForbidden()
         registration_form = self.form_class()
@@ -61,16 +65,17 @@ class RegistrationPage(View):
     def post(self, request, invite_slug):
         bound_form = self.form_class(request.POST)
         if bound_form.is_valid():
-            user = bound_form.save(commit=False)
-            password = bound_form.cleaned_data["password"]
-            username = bound_form.cleaned_data["username"]
-            user.set_password(password)
-            user.save()
+            bound_form.save()
+            return render(request, self.submitted_template)
+            # password = bound_form.cleaned_data["password"]
+            # username = bound_form.cleaned_data["username"]
+            # user.set_password(password)
+            # user.save()
 
-            user = authenticate(username=username, password=password)
-            if user is not None:
-                if user.is_active:
-                    login(request, user)
+            # user = authenticate(username=username, password=password)
+            # if user is not None:
+            #     if user.is_active:
+            #         login(request, user)
                     # self.get_invite_slug_from_db(invite_slug).delete()
-                    return render(request, self.submitted_template)
+
         return render(request, self.template_name, context={"form": bound_form})

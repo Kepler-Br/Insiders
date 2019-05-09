@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from django.shortcuts import redirect
+
 from .models import *
 
 from .forms import *
@@ -20,6 +21,11 @@ class UserHomepage(View):
     def get(self, request, user_slug):
         posts = Post.objects.all()
         return render(request, "homepage/user_posts.html", context={"posts": posts})
+
+
+class CurrentUserHomepage(View):
+    def get(self, request):
+        return render(request, "homepage/homepage.html")
 
 
 class ViewPost(View):

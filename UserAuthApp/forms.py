@@ -1,19 +1,19 @@
 from django import forms
 from django.contrib.auth.models import User
 from .models import InviteRequests
+from django.contrib.auth.forms import UserCreationForm
 
 
-class RegistrationForm(forms.ModelForm):
+class RegistrationForm(UserCreationForm):
+    email = forms.EmailField(required=True)
+    first_name = forms.CharField(required=True)
+
     class Meta:
         model = User
-        fields = ["email", "password", "first_name", "username"]
+        fields = ["username", "first_name", "last_name", "email", "password1", "password2"]
 
-        widgets = {
-            "email": forms.EmailInput(attrs={'class': 'form-control', 'placeholder': 'Email address'}),
-            "password": forms.PasswordInput(attrs={'class': 'form-control', 'placeholder': 'Password'}),
-            "first_name": forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Firstname'}),
-            "username": forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Username'}),
-        }
+
+
 
 
 class RequestInviteForm(forms.ModelForm):
