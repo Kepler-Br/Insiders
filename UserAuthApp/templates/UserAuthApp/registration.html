@@ -17,10 +17,14 @@
 </head>
 
 <body id="mainContainer">
+    <div id="navigationBar" style="position: fixed; width: 100%; z-index: 100">
+        {% include "navbar.html" %}
+    </div>
+    <div id="pageBody">
     <div id="wannainCenterbox">
         <div class="card-header">
             <h4>
-            What a lucky day! You were invited <span class="badge badge-secondary" style="background: #30ce5c; font-size: 100%">in</span><span><i>side</i></span>!
+            What a lucky day! <br> You were invited <span class="badge badge-secondary" style="background: #30ce5c; font-size: 100%">in</span><span><i>side</i></span>!
         </h4>
         </div>
         <div>
@@ -28,6 +32,11 @@
         </div>
         <form action="" method="post">
             {% csrf_token %}
+                {% for error in form.errors.values %}
+                    <div class="alert alert-danger">
+                        {{ error }}
+                    </div>
+                {% endfor %}
             <div class="form-group row">
                 <label for='{{ form.email.id_for_label }}' class="col-sm-4 col-form-label">{{ form.email.label }}</label>
                 <div class="col-sm-8">
@@ -56,8 +65,9 @@
                     <small class="form-text text-muted">Your first name. Real one.</small>
                 </div>
             </div>
-            <button type="submit" class="btn btn-primary" style="background: #30ce5c; border-color: #30ce5c">I wanna be inside</button>
+            <button type="submit" class="btn btn-primary" style="background: #30ce5c; border-color: #30ce5c">Dive in.</button>
         </form>
     </div>
+        </div>
 </body>
 </html>

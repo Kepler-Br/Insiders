@@ -21,13 +21,14 @@
         {% include "navbar.html" %}
     </div>
     <div id="pageBody">
-    <div id="wannainCenterbox">
-
-        <div class="card-header">
-            <h4>Success!</h4>
+        <div id="wannainCenterbox">
+            <div class="card-header">
+                <h4>Success!</h4>
+            </div>
+            <p>
+                <h5>Your request have been submitted.</h5></p>
+            <a class="btn btn-success" href="{% url 'login_page' %}">Log in</a>
         </div>
-            <p><h5>Your request have been submitted.</h5></p>
-        <a class="btn btn-success" href="{% url 'login_page' %}">Log in</a>
     </div>
 </body>
 </html>
