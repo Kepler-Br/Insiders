@@ -12,13 +12,16 @@ from django.http import HttpResponseForbidden
 class LogoutPage(View):
     def get(self, request):
         logout(request)
-        redirect("login_page")
+        return redirect("login_page")
 
 
-class LoginPage(View):
-    def get(self, request):
-        logout(request)
-        redirect("login_page")
+# class LoginPage(View):
+#     template_name = "UserAuthApp/login.html"
+#     form_class = LoginForm
+#
+#     def get(self, request):
+#         form = self.form_class()
+#         return render(request, self.template_name, context={"form": form})
 
 
 class RequestInvitePage(View):
@@ -40,8 +43,8 @@ class RequestInvitePage(View):
 
 class RegistrationPage(View):
     form_class = RegistrationForm
-    # template_name = "UserAuthApp/registration.html"
-    # template_name = "UserAuthApp/request_submitted.html"
+    template_name = "UserAuthApp/registration.html"
+    submitted_template = "UserAuthApp/request_submitted.html"
 
     def get_invite_slug_from_db(self, invite_slug: str):
         try:
@@ -50,8 +53,8 @@ class RegistrationPage(View):
             return None
 
     def get(self, request, invite_slug):
-        if not self.get_invite_slug_from_db(invite_slug):
-            return HttpResponseForbidden()
+        # if not self.get_invite_slug_from_db(invite_slug):
+        #     return HttpResponseForbidden()
         registration_form = self.form_class()
         return render(request, self.template_name, context={"form": registration_form})
 
@@ -68,6 +71,6 @@ class RegistrationPage(View):
             if user is not None:
                 if user.is_active:
                     login(request, user)
-                    self.get_invite_slug_from_db(invite_slug).delete()
-                    return redirect()
+                    # self.get_invite_slug_from_db(invite_slug).delete()
+                    return render(request, self.submitted_template)
         return render(request, self.template_name, context={"form": bound_form})

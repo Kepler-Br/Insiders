@@ -29,12 +29,14 @@ class RequestInviteForm(forms.ModelForm):
             "about": forms.Textarea(attrs={'class': 'form-control', 'placeholder': 'About you'}),
         }
 
-
-class LoginForm(forms.Form):
-    class Meta:
-        fields = ["username", "password"]
-
-        widgets = {
-            "username": forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Username or email'}),
-            "password": forms.PasswordInput(attrs={'class': 'form-control', 'placeholder': 'Password'}),
-        }
+#
+# class LoginForm(forms.Form):
+#     class Meta:
+#         fields = ["username", "password"]
+#
+#         widgets = {
+#             "username": forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Username or email'}),
+#             "password": forms.PasswordInput(attrs={'class': 'form-control', 'placeholder': 'Password'}),
+#         }
+#     username = forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Username or email'})
+#     password = forms.CharField(label='Your name', max_length=100, type="password")
