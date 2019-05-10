@@ -1,0 +1,33 @@
+{% extends "main_template.html" %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block title %}
+User posts - {{ block.super }}
+{% endblock %}
+
+{% block includes %}
+    <link rel="stylesheet" href="{% static 'css/user_post.css' %}">
+{% endblock %}
+
+{% block content %}
+
+ <!--style="padding: 1%; width: 70%; margin: auto"-->
+<div class="content-section">
+    <div class="media">
+        <form enctype="multipart/form-data" action="" method="post">
+            {% csrf_token %}
+            <fieldset class="form-group">
+                <legend class="border-bottom mb-4">Profile info</legend>
+                {{ user_form|crispy }}
+                {{ profile_form|crispy }}
+            </fieldset>
+            <div class="form-group">
+                <button class="btn-outline-info btn" type="submit">Update</button>
+            </div>
+        </form>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

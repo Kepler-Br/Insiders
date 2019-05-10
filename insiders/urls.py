@@ -21,7 +21,7 @@ from django.contrib.auth.decorators import login_required
 
 urlpatterns = [
     path('', include('homepage.urls')),
-    path('', include('UserAuthApp.urls')),
+    path('', include('users.urls')),
     path('admin/', admin.site.urls),
     path('', RedirectView.as_view(url='home')),
 ]
