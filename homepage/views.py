@@ -23,6 +23,15 @@ class UserHomepage(View):
         return render(request, "homepage/user_posts.html", context={"posts": posts})
 
 
+#TODO: edit user complete
+class UserHomepageEdit(View):
+    def get(self, request):
+        user_form = User(request.user)
+        profile_form = request.user.profile
+        return render(request, "homepage/homepage_edit.html", context={"user_form": user_form,
+                                                                       "profile_form": profile_form})
+
+
 class CurrentUserHomepage(View):
     def get(self, request):
         return render(request, "homepage/homepage.html")

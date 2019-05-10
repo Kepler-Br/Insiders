@@ -12,7 +12,7 @@ urlpatterns = [
     path('post/new', login_required(views.PostCreate.as_view()), name="post_create"),
     path('post/<str:slug>', login_required(views.ViewPost.as_view()), name="post_detail_url"),
     path('home', login_required(views.CurrentUserHomepage.as_view()), name="homepage"),
-
+    path('home/edit', login_required(views.UserHomepageEdit.as_view()), name="homepage_edit"),
 ]
 
 if settings.DEBUG:

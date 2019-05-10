@@ -21,9 +21,6 @@ User posts - {{ block.super }}
             <p class="text-secondary">Gender: {{ user.profile.get_gender_display }}</p>
             <p class="text-secondary">About: {{ user.profile.short_about }}</p>
             <p class="text-secondary">Status: {{ user.profile.status }}</p>
-            {% if user.is_authenticated %}
-            <a href="{% url 'homepage_edit' %}">Edit</a>
-            {% endif %}
         </div>
     </div>
 </div>
