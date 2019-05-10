@@ -15,19 +15,10 @@ class LogoutPage(View):
         return redirect("login_page")
 
 
-# class LoginPage(View):
-#     template_name = "UserAuthApp/login.html"
-#     form_class = LoginForm
-#
-#     def get(self, request):
-#         form = self.form_class()
-#         return render(request, self.template_name, context={"form": form})
-
-
 class RequestInvitePage(View):
     form_class = RequestInviteForm
-    template_name = "UserAuthApp/request_invite.html"
-    success_template_name = "UserAuthApp/request_submitted.html"
+    template_name = "users/request_invite.html"
+    success_template_name = "users/request_submitted.html"
 
     def get(self, request):
         if request.user.is_authenticated:
@@ -45,8 +36,8 @@ class RequestInvitePage(View):
 
 class RegistrationPage(View):
     form_class = RegistrationForm
-    template_name = "UserAuthApp/registration.html"
-    submitted_template = "UserAuthApp/request_submitted.html"
+    template_name = "users/registration.html"
+    submitted_template = "users/request_submitted.html"
 
     def get_invite_slug_from_db(self, invite_slug: str):
         try:
@@ -79,3 +70,38 @@ class RegistrationPage(View):
                     # self.get_invite_slug_from_db(invite_slug).delete()
 
         return render(request, self.template_name, context={"form": bound_form})
+
+
+class UserHomepageEdit(View):
+    template_name = "users/homepage_edit.html"
+
+    def get(self, request):
+        user_form = UserEditForm(instance=request.user)
+        profile_form = ProfileEditForm(instance=request.user.profile)
+        context = {"user_form": user_form,
+                   "profile_form": profile_form}
+        return render(request, self.template_name, context=context)
+
+    def post(self, request):
+        user_form = UserEditForm(request.POST, instance=request.user)
+        profile_form = ProfileEditForm(request.POST, request.FILES, instance=request.user.profile)
+        if user_form.is_valid() and profile_form.is_valid():
+            user_form.save()
+            profile_form.save()
+            return redirect("homepage")
+        else:
+            context = {"user_form": user_form,
+                       "profile_form": profile_form}
+            return render(request, self.template_name, context=context)
+
+
+class CurrentUserHomepage(View):
+    def get(self, request):
+        return render(request, "users/homepage.html")
+
+
+class UserHomepage(View):
+    def get(self, request, user_slug):
+        posts = Post.objects.all()
+        return render(request, "homepage/user_posts.html", context={"posts": posts})
+
