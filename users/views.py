@@ -105,7 +105,8 @@ class CurrentUserHomepage(View):
 
 class UserHomepage(View):
     def get(self, request, user_slug):
-        posts = Post.objects.filter(author=request.user)
-        context = {"posts": posts, "profile": User.objects.get(user_slug).profile}
-        return render(request, "homepage/user_posts.html", context=context)
+        user = User.objects.get(username=user_slug)
+        posts = Post.objects.filter(author=user).order_by('date_pub')
+        context = {"posts": posts, "profile": user.profile}
+        return render(request, "users/homepage.html", context=context)
 
