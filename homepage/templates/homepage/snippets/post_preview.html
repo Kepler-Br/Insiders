@@ -1,0 +1,33 @@
+<div style="padding-top: 1%;">
+    <div class="card">
+        <div class="card-header">
+            <div class="media">
+                <img class="rounded-circle account-img" style="width:50px; height:50px;" src="{{ user.profile.image.url }}">
+                <div class="media-body">
+                    {% if post.author == user %}
+                    <div class="container">
+                        <a class="float-right text-danger" href="{% url 'post_delete' post.slug %}">Delete </a>
+                        <a class="float-right" href="{% url 'post_edit' post.slug %}" style="padding-right: 1%;">Edit</a>
+                    </div>
+                    {% endif %}
+                    <div class="container">
+                        <span class="account-heading" style="display: block;">{{ post.author.username }}</span>
+                        <span class="text-secondary">{{post.author.first_name}} {{post.author.last_name}}</span>
+                        <span class="float-right text-secondary" >{{ post.date_pub|date:"F d, Y" }}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card-body">
+            <div class="media-body">
+                <h3 class="account-heading">{{post.title}}</h3>
+                <hr class="style1">
+                <p class="card-text">{{ post.processed_short_body|safe }}</p>
+
+            </div>
+        </div>
+        <div class="card-footer">
+            <a href="{% url 'post_view' post.slug %}">See full post</a>
+        </div>
+    </div>
+</div>

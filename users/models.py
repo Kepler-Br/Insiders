@@ -26,9 +26,11 @@ class Profile(models.Model):
 
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     image = models.ImageField(default='profile_pictures/default_avatar.png', upload_to="profile_pictures")
-    short_about = models.CharField(max_length=100)
-    status = models.CharField(max_length=256)
+    # short_about = models.CharField(max_length=100, blank=True)
+    about = models.CharField(max_length=1000, blank=True)
+    status = models.CharField(max_length=256, blank=True)
     gender = models.CharField(max_length=1, choices=GENDER_CHOICES, default='U')
 
     def __str__(self):
         return f"{self.user.username}'s profile"
+

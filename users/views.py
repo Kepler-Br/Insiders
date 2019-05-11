@@ -5,6 +5,7 @@ from django.core.exceptions import ObjectDoesNotExist
 from .forms import *
 from .models import *
 from django.http import HttpResponseForbidden
+from homepage.models import Post
 
 # Create your views here.
 
@@ -97,11 +98,14 @@ class UserHomepageEdit(View):
 
 class CurrentUserHomepage(View):
     def get(self, request):
-        return render(request, "users/homepage.html")
+        posts = Post.objects.filter(author=request.user)
+        context = {"posts": posts, "profile": request.user.profile}
+        return render(request, "users/homepage.html", context=context)
 
 
 class UserHomepage(View):
     def get(self, request, user_slug):
-        posts = Post.objects.all()
-        return render(request, "homepage/user_posts.html", context={"posts": posts})
+        posts = Post.objects.filter(author=request.user)
+        context = {"posts": posts, "profile": User.objects.get(user_slug).profile}
+        return render(request, "homepage/user_posts.html", context=context)
 

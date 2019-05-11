@@ -13,9 +13,6 @@ class RegistrationForm(UserCreationForm):
         fields = ["username", "first_name", "last_name", "email", "password1", "password2"]
 
 
-
-
-
 class RequestInviteForm(forms.ModelForm):
     class Meta:
         model = InviteRequests
@@ -39,6 +36,11 @@ class UserEditForm(forms.ModelForm):
 
 
 class ProfileEditForm(forms.ModelForm):
+    short_about = forms.CharField(required=False, widget=forms.Textarea)
+    about = forms.CharField(required=False, widget=forms.Textarea)
+
     class Meta:
         model = Profile
-        fields = ["image", "short_about", "status", "gender"]
+        fields = ["image", "short_about", "about", "status", "gender"]
+
+

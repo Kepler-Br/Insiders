@@ -22,11 +22,11 @@ class SingleTagProcessor:
     @staticmethod
     def process_youtube_tag(tag: str) -> str:
         attrs: dict = SingleTagProcessor.get_attributes_from_tag(tag)
-        href = attrs.get("href")
+        href = attrs.get("link")
         if not href:
             return tag
 
-        link_matched = re.match(r"(https?:\/\/)?(www\.)?youtube\.com\/watch\?v=(\w+)", href)
+        link_matched = re.match(r"(https?:\/\/)?(www\.)?youtube\.com\/watch\?v=([\-_\w\d]+)", href)
         if not link_matched:
             return tag
         video_link = link_matched[3]
@@ -46,52 +46,30 @@ class SingleTagProcessor:
 
     @staticmethod
     def get_single_tags_from_text(text: str) -> list:
-        return re.findall(r"(\[\w+ [\w\d \/:=\?\.%\"]+\/\])", text)
+        return re.findall(r"(\[\w+ [\w\d \/:=\?\.%\`_\-]+\/])", text)
 
     @staticmethod
     def get_attributes_from_tag(tag: str) -> dict:
-        found = re.findall(r"(\w+)=\"([\w\d \/:=\?\.%]+)\"", tag)
+        found = re.findall(r"(\w+)=\`([\w\d\-_ \/:=\?\.%]+)\`", tag)
         attributes = {}
         for key, value in found:
             attributes[key] = value
         return attributes
 
 
-class TextareaWithTags(forms.Textarea):
-    input_type = 'text'  # Subclasses must define this.
-    template_name = 'django/forms/widgets/textarea.html'
-
-    def __init__(self, attrs=None):
-        if attrs is not None:
-            attrs = attrs.copy()
-            self.input_type = attrs.pop('type', self.input_type)
-        super().__init__(attrs)
-
-    def get_context(self, name, value, attrs):
-        print(value)
-        context = super().get_context(name, value, attrs)
-        context['widget']['type'] = self.input_type
-        return context
-
-    def value_from_datadict(self, data, files, name):
-        widget_data = data.get(name)
-        if not widget_data:
-            return ""
-        result = SingleTagProcessor.process(widget_data)
-        return result
-
-
 class PostForm(forms.ModelForm):
     class Meta:
         model = Post
-        fields = ["title", "slug", "short_body", "body", "post_tags"]
+        fields = ["title", "slug", "short_body", "body", "post_tags", "processed_body", "processed_short_body"]
 
         widgets = {
             'title': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Post title'}),
             'slug': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Post URL (optional)'}),
-            'short_body': TextareaWithTags(attrs={'class': 'form-control', 'placeholder': 'Short post body (optional)'}),
-            'body': TextareaWithTags(attrs={'class': 'form-control', 'placeholder': 'Post body'}),
+            'short_body': forms.Textarea(attrs={'class': 'form-control', 'placeholder': 'Short post body (optional)'}),
+            'body': forms.Textarea(attrs={'class': 'form-control', 'placeholder': 'Post body'}),
             'post_tags': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Post tags (optional)'}),
+            'processed_body': forms.HiddenInput(),
+            'processed_short_body': forms.HiddenInput(),
         }
 
     def __init__(self, *args, **kwargs):
@@ -108,11 +86,76 @@ class PostForm(forms.ModelForm):
         else:
             return f"{new_slug}-{timestamp_base64_str}"
 
-    def clean_short_body(self):
-        new_short_body = self.cleaned_data['short_body']
-        if new_short_body:
-            return new_short_body
+    def process_short_body(self):
+        short_body = self.cleaned_data['short_body']
+        if short_body:
+            new_short_body = escape(short_body)
+            self.cleaned_data['short_body'] = new_short_body
+            self.cleaned_data['processed_short_body'] = SingleTagProcessor.process(new_short_body)
+        else:
+            body = self.cleaned_data['body']
+            body = escape(body)
+            if len(body) > 1000:
+                new_short_body = body[:1000 - 5] + "..."
+            else:
+                new_short_body = body
+            self.cleaned_data['short_body'] = new_short_body
+            self.cleaned_data['processed_short_body'] = SingleTagProcessor.process(new_short_body)
+
+    def process_body(self):
         body = self.cleaned_data['body']
-        # 1000 is maximum short_body size in DB.
-        new_short_body = body[:1000-5] + "..."
-        return new_short_body
+        new_body = escape(body)
+        self.cleaned_data['body'] = new_body
+        self.cleaned_data['processed_body'] = SingleTagProcessor.process(new_body)
+
+    def clean(self):
+        super().clean()
+        self.process_short_body()
+        self.process_body()
+
+
+class PostEditForm(forms.ModelForm):
+    class Meta:
+        model = Post
+        fields = ["title", "short_body", "body", "post_tags", "processed_body", "processed_short_body"]
+
+        widgets = {
+            'title': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Post title'}),
+            'short_body': forms.Textarea(attrs={'class': 'form-control', 'placeholder': 'Short post body (optional)'}),
+            'body': forms.Textarea(attrs={'class': 'form-control', 'placeholder': 'Post body'}),
+            'post_tags': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Post tags (optional)'}),
+            'processed_body': forms.HiddenInput(),
+            'processed_short_body': forms.HiddenInput(),
+        }
+
+    def __init__(self, *args, **kwargs):
+        super(PostEditForm, self).__init__(*args, **kwargs)
+
+    def process_short_body(self):
+        short_body = self.cleaned_data['short_body']
+        if short_body:
+            new_short_body = escape(short_body)
+            self.cleaned_data['short_body'] = new_short_body
+            self.cleaned_data['processed_short_body'] = SingleTagProcessor.process(new_short_body)
+        else:
+            body = self.cleaned_data['body']
+            body = escape(body)
+            # 1000 is maximum short_body size in DB.
+            if len(body) > 1000:
+                new_short_body = body[:1000 - 5] + "..."
+            else:
+                new_short_body = body
+            self.cleaned_data['short_body'] = new_short_body
+            self.cleaned_data['processed_short_body'] = SingleTagProcessor.process(new_short_body)
+
+    def process_body(self):
+        body = self.cleaned_data['body']
+        new_body = escape(body)
+        self.cleaned_data['body'] = new_body
+        self.cleaned_data['processed_body'] = SingleTagProcessor.process(new_body)
+        print()
+
+    def clean(self):
+        super().clean()
+        self.process_short_body()
+        self.process_body()

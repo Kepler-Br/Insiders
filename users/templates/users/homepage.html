@@ -12,20 +12,39 @@ User posts - {{ block.super }}
 {% block content %}
 
  <!--style="padding: 1%; width: 70%; margin: auto"-->
-<div class="content-section">
-    <div class="media">
-        <img class="rounded-circle account-img" style="width:100px; height:100px;" src="{{ user.profile.image.url }}">
-        <div class="media-body">
-            <h2 class="account-heading">{{ user.username }}</h2>
-            <p class="text-secondary">{{ user.first_name }} {{ user.last_name }}</p>
-            <p class="text-secondary">Gender: {{ user.profile.get_gender_display }}</p>
-            <p class="text-secondary">About: {{ user.profile.short_about }}</p>
-            <p class="text-secondary">Status: {{ user.profile.status }}</p>
-            {% if user.is_authenticated %}
-            <a href="{% url 'homepage_edit' %}">Edit</a>
+<!--<div class="content-section">-->
+    <!--<div class="media">-->
+
+
+    <!--</div>-->
+<!--</div>-->
+{% include "users/snippets/homepage_user_info.html" %}
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-4" style="padding-top: 1%;">
+            {% include "users/snippets/homepage_user_media.html" %}
+        </div>
+        <div class="col-md-8">
+            {% if posts|length == 0 %}
+            <div style="padding-top: 1%;">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="media-body">
+                            <span class="card-text">No posts here.</span>
+                            {% if profile.user == user %}
+                                <a href="{% url 'post_create' %}">Create</a>
+                            {% endif %}
+
+                        </div>
+                    </div>
+                </div>
+            </div>
             {% endif %}
+            {% for post in posts %}
+                {% include "homepage/snippets/post_preview.html" %}
+            {% endfor %}
         </div>
     </div>
 </div>
-
 {% endblock %}
