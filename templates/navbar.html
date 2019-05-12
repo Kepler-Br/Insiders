@@ -1,21 +1,29 @@
 {% load static %}
 
-<nav class="navbar navbar-expand-lg navbar-light " style="background-color: #475c4d;">
-    <!--<nav class="navbar navbar-expand-lg navbar-light bg-light">-->
-    <!--<a class="navbar-brand" href="#">Navbar</a>-->
-    <img class="navbar-brand" src="{% static 'images/logo.png' %}" onerror="{% static 'images/favicon.ico' %}">
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-        <div class="navbar-nav">
+<header class="navbar navbar-expand navbar-dark flex-column flex-md-row bd-navbar insider-nav-bar" style="background-color: #475c4d;">
+    <a class="navbar-brand mr-0 mr-md-2" href="/" aria-label="Bootstrap">
+        <img class="navbar-brand " src="{% static 'images/logo.png' %}" onerror="{% static 'images/favicon.ico' %}">
+    </a>
+    <div class="navbar-nav-scroll">
+        <ul class="navbar-nav bd-navbar-nav flex-row">
             {% if user.is_authenticated %}
-                <a class="nav-item nav-link active" href="{% url 'post_create' %}">Make a post</a>
-                <a class="nav-item nav-link active" href="{% url 'logout_page' %}">Logout</a>
+                <li class="nav-item">
+                    <a class="nav-link" href="/">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'logout_page' %}">Logout</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'post_create' %}">Make a post</a>
+                </li>
             {% else %}
-                <a class="nav-item nav-link active" href="{% url 'login_page' %}">Login</a>
-                <a class="nav-item nav-link active" href="{% url 'request_invite_page' %}">Request invite link</a>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'login_page' %}">Login</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'request_invite_page' %}">Request invite link</a>
+                </li>
             {% endif %}
-        </div>
+        </ul>
     </div>
-</nav>
+</header>

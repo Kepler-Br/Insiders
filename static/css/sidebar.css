@@ -1,27 +1,30 @@
-#sideBar
+@media only screen and (min-width: 768px) {
+.insider-side-bar
 {
     background-color: #d3dad1;
-    margin-top: 56px;
-    float: left;
-    height: 100%;
+    position: sticky;
+    top: 4rem;
+    z-index: 1000;
+    height: calc(100vh - 4rem);
     box-sizing: border-box;
-    position: fixed;
-    width: 192px;
     border-right: 1px solid #8a9f84;
-    padding: 10px;
+}
 }
 
-.sidebar_element
+.insider-side-bar
 {
-    color: #00428a;
-    font-size: 90%;
-    padding-top: 1px;
-    padding-bottom: 1px;
+    background-color: #d3dad1;
+    z-index: 1000;
+    box-sizing: border-box;
+    border-bottom: 1px solid #8a9f84;
 }
 
-.sidebar_element:hover
+.insider-sidebar-element
 {
-    background-color: #00428a;
-    border-radius: 3px;
-    color: #d3dad1;
+    padding: .25rem 0.1rem;
+}
+
+.insider-sidebar-search
+{
+    padding: 1rem 0.1rem;
 }
