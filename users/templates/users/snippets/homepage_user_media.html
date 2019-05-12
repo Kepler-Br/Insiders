@@ -1,16 +1,31 @@
-<div class="card">
-    <div class="card-header">
-        <div class="media">
-            <div class="media-body">
-                <div class="container">
-                    <span class="account-heading text-capitalize">{{user.username}}'s</span><span> frineds</span>
+<div style="padding-top: 2%; ">
+    <div class="card">
+        <div class="card-header">
+            <div class="media">
+                <div class="media-body">
+                    <div class="container">
+                        <span class="account-heading">User content</span>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-    <div class="card-body">
-        <div class="media-body">
-                <span class="text-secondary">TEXT FILLER</span>
+        <div class="card-body">
+            <!--<div class="media-body">-->
+            <ul class="nav flex-column">
+                <div class="nav-item">
+                    <a class="nav-link sidebar_element" href="{% url 'homepage' %}">Memes</a>
+                </div>
+                <li class="nav-item">
+                    <a class="nav-link sidebar_element" href="#">Pictures</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link sidebar_element" href="#">Internet places</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link sidebar_element" href="#">Bookmarks</a>
+                </li>
+            </ul>
+            <!--</div>-->
         </div>
     </div>
 </div>

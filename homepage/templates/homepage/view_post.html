@@ -2,29 +2,51 @@
 {% load static %}
 
 {% block title %}
-User posts - {{ block.super }}
+User post - {{ block.super }}
 {% endblock %}
 
 {% block includes %}
-    <link rel="stylesheet" href="{% static 'css/user_post.css' %}">
+<link rel="stylesheet" href="{% static 'css/user_post.css' %}">
 {% endblock %}
 
 {% block content %}
-  <article class="media content-section">
-    <img class="rounded-circle article-img" src="{{ object.author.profile.image.url }}" style="max-width:5%">
-    <div class="media-body">
-      <div class="article-metadata">
-        <a class="mr-2" href="#">{{ object.author }}</a>
-        <small class="text-muted">{{ object.date_posted|date:"F d, Y" }}</small>
-        {% if object.author == user %}
-          <div>
-            <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{% url 'post_edit' object.slug %}">Update</a>
-            <!--<a class="btn btn-danger btn-sm mt-1 mb-1" href=" url 'post-delete' object.id ">Delete</a>-->
-          </div>
-        {% endif %}
-      </div>
-      <h2 class="article-title">{{ object.title }}</h2>
-      <p class="article-content">{{ object.processed_body|safe }}</p>
+<div class="container">
+    <div class="card">
+        <div class="card-header">
+            <div class="media">
+                <a href="{% url 'user_home' profile.user.username %}" style="padding-right: 2%;">
+                    <img class="rounded-circle account-img" style="width:100px; height:100px; margin-right: 2%"
+                         src="{{ profile.image.url }}">
+                </a>
+                <div class="media-body">
+                    {% if user == post.author %}
+                    <a class="float-right text-danger" href="{% url 'post_delete' post.slug %}">Delete </a>
+                    <a class="float-right" href="{% url 'post_edit' post.slug %}" style="padding-right: 1%;">Edit</a>
+                    {% endif %}
+                    <a href="{% url 'user_home' profile.user.username %}" style="color: black;">
+                    <h2 class="account-heading">{{ profile.user.username }}</h2>
+                    </a>
+                    <div class="container">
+                        <span class="text-secondary">{{profile.user.first_name}} {{profile.user.last_name}}</span>
+                    </div>
+                    <div class="container">
+                        <span class="text-secondary">{{profile.user.status}}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card-body">
+            <div class="media-body">
+                <h3 class="account-heading">{{post.title}}</h3>
+                <hr class="style1">
+                <div class="text-justify">
+                    {{ post.processed_body|safe }}
+                </div>
+            </div>
+        </div>
+        <div class="card-footer">
+            Tags: no tags
+        </div>
     </div>
-  </article>
+</div>
 {% endblock %}

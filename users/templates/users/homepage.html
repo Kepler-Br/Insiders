@@ -22,25 +22,24 @@ User posts - {{ block.super }}
 
 <div class="container">
     <div class="row">
-        <div class="col-md-4" style="padding-top: 1%;">
+        <div class="col-md-4" style="padding-top: 0%;">
+            {% include "users/snippets/homepage_user_actions.html" %}
             {% include "users/snippets/homepage_user_media.html" %}
+            {% include "users/snippets/homepage_user_friends.html" %}
         </div>
         <div class="col-md-8">
-            {% if posts|length == 0 %}
-            <div style="padding-top: 1%;">
-                <div class="card">
-                    <div class="card-body">
-                        <div class="media-body">
-                            <span class="card-text">No posts here.</span>
-                            {% if profile.user == user %}
-                                <a href="{% url 'post_create' %}">Create</a>
-                            {% endif %}
-
-                        </div>
-                    </div>
-                </div>
-            </div>
-            {% endif %}
+            <!--{% if posts|length == 0 %}-->
+                <!--<div class="card">-->
+                    <!--<div class="card-body">-->
+                        <!--<div class="media-body">-->
+                            <!--<span class="card-text">No posts here.</span>-->
+                            <!--{% if profile.user == user %}-->
+                                <!--<a href="{% url 'post_create' %}">Create</a>-->
+                            <!--{% endif %}-->
+                    <!--</div>-->
+                <!--</div>-->
+            <!--</div>-->
+            <!--{% endif %}-->
             {% for post in posts %}
                 {% include "homepage/snippets/post_preview.html" %}
             {% endfor %}
