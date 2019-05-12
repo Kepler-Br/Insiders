@@ -1,11 +1,9 @@
-<!--<div class="container-fluid">-->
-    <div class="media">
-        <img class="rounded-circle account-img" style="width:50px; height:50px; margin-right: 2%"
-             src="{{ user.profile.image.url }}">
-        <div class="media-body">
-            <h5 class="account-heading">{{ user.username }}</h5>
-            <!--<div class="container">-->
-            <span class="text-secondary">{{user.first_name}} {{user.last_name}}</span>
-        </div>
+<div class="media">
+    <img class="rounded-circle account-img" style="width:50px; height:50px; margin-right: 2%"
+         src="{{ user.profile.image.url }}">
+    <div class="media-body">
+        <h5 class="account-heading text-capitalize">{{ user.username }}</h5>
+        <!--<div class="container">-->
+        <span class="text-secondary">{{user.first_name}} {{user.last_name}}</span>
     </div>
-<!--</div>-->
+</div>

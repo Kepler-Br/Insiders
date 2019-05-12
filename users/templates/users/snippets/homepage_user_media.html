@@ -12,17 +12,21 @@
         <div class="card-body">
             <!--<div class="media-body">-->
             <ul class="nav flex-column">
-                <div class="nav-item">
-                    <a class="nav-link sidebar_element" href="{% url 'homepage' %}">Memes</a>
-                </div>
                 <li class="nav-item">
-                    <a class="nav-link sidebar_element" href="#">Pictures</a>
+
+                    <a class="nav-link sidebar_element" href="{% url 'homepage' %}"><span class="badge badge-secondary ">{{media_count.posts}}</span> Posts</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link sidebar_element" href="#">Internet places</a>
+                    <a class="nav-link sidebar_element" href="{% url 'homepage' %}"><span class="badge badge-secondary ">0</span> Memes</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link sidebar_element" href="#">Bookmarks</a>
+                    <a class="nav-link sidebar_element" href="#"><span class="badge badge-secondary ">0</span> Pictures</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link sidebar_element" href="#"><span class="badge badge-secondary ">0</span> Internet places</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link sidebar_element" href="#"><span class="badge badge-secondary ">0</span> Bookmarks</a>
                 </li>
             </ul>
             <!--</div>-->

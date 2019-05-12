@@ -7,7 +7,7 @@ from django.contrib.auth.decorators import login_required
 
 urlpatterns = [
     path('post/<str:slug>/edit', login_required(views.PostEdit.as_view()), name="post_edit"),
-    path('post/<str:slug>/delete', login_required(views.PostEdit.as_view()), name="post_delete"),
+    path('post/<str:slug>/delete', login_required(views.PostDelete.as_view()), name="post_delete"),
     path('post/new', login_required(views.PostCreate.as_view()), name="post_create"),
     path('user/<str:user_id>/posts', login_required(views.UserPosts.as_view()), name="user_posts"),
 

@@ -6,17 +6,16 @@
                 <div class="media-body">
 
                     <div class="container" style="padding-right:0%">
-                        <span class="account-heading">{{ post.author.username }}</span>
-                        <span class="text-secondary">{{post.author.first_name}} {{post.author.last_name}}</span>
+                        <span class="account-heading text-capitalize">{{ post.author.username }}</span>
                         <span class="float-right text-secondary">{{ post.date_pub|date:"Y F d ‒ H:m " }}</span>
-                    </div>
-                    {% if post.author == user or user.is_stuff %}
-                    <div class="container" style="padding-right:0%">
+                        <br>
+                        <span class="text-secondary">{{post.author.first_name}} {{post.author.last_name}}</span>
+                        {% if post.author == user or user.is_stuff %}
                         <a class="float-right text-danger" href="{% url 'post_delete' post.slug %}">Delete</a>
                         <a class="float-right" href="{% url 'post_edit' post.slug %}"
                            style="padding-right: 0%; margin-right:1%;">Edit</a>
+                        {% endif %}
                     </div>
-                    {% endif %}
                 </div>
             </div>
         </div>
@@ -39,6 +38,9 @@
             <div>
                 <span>Tags: </span>
                 {{ post.post_tags }}
+                {% if post.post_tags|length == 0 %}
+                    no tags.
+                {% endif %}
             </div>
         </div>
     </div>

@@ -99,7 +99,8 @@ class UserHomepageEdit(View):
 class CurrentUserHomepage(View):
     def get(self, request):
         posts = Post.objects.filter(author=request.user).order_by('-date_pub')
-        context = {"posts": posts, "profile": request.user.profile}
+        count = {"posts": Post.objects.count()}
+        context = {"posts": posts, "profile": request.user.profile, "media_count": count}
         return render(request, "users/homepage.html", context=context)
 
 
@@ -107,6 +108,7 @@ class UserHomepage(View):
     def get(self, request, user_slug):
         user = User.objects.get(username=user_slug)
         posts = Post.objects.filter(author=user).order_by('-date_pub')
-        context = {"posts": posts, "profile": user.profile}
+        count = {"posts": Post.objects.count()}
+        context = {"posts": posts, "profile": user.profile, "media_count": count}
         return render(request, "users/homepage.html", context=context)
 
