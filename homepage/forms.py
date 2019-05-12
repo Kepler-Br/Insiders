@@ -89,24 +89,17 @@ class PostForm(forms.ModelForm):
     def process_short_body(self):
         short_body = self.cleaned_data['short_body']
         if short_body:
+            self.cleaned_data['short_body'] = short_body
             new_short_body = escape(short_body)
-            self.cleaned_data['short_body'] = new_short_body
-            self.cleaned_data['processed_short_body'] = SingleTagProcessor.process(new_short_body)
+            self.cleaned_data['processed_short_body'] = SingleTagProcessor.process(new_short_body).replace("\r\n", "<br>")
         else:
-            body = self.cleaned_data['body']
-            body = escape(body)
-            if len(body) > 1000:
-                new_short_body = body[:1000 - 5] + "..."
-            else:
-                new_short_body = body
-            self.cleaned_data['short_body'] = new_short_body
-            self.cleaned_data['processed_short_body'] = SingleTagProcessor.process(new_short_body)
+            self.cleaned_data['processed_short_body'] = short_body
 
     def process_body(self):
         body = self.cleaned_data['body']
         new_body = escape(body)
-        self.cleaned_data['body'] = new_body
-        self.cleaned_data['processed_body'] = SingleTagProcessor.process(new_body)
+        # self.cleaned_data['body'] = new_body
+        self.cleaned_data['processed_body'] = SingleTagProcessor.process(new_body).replace("\r\n", "<br>")
 
     def clean(self):
         super().clean()
@@ -134,24 +127,15 @@ class PostEditForm(forms.ModelForm):
     def process_short_body(self):
         short_body = self.cleaned_data['short_body']
         if short_body:
+            self.cleaned_data['short_body'] = short_body
             new_short_body = escape(short_body)
-            self.cleaned_data['short_body'] = new_short_body
-            self.cleaned_data['processed_short_body'] = SingleTagProcessor.process(new_short_body)
-        else:
-            body = self.cleaned_data['body']
-            body = escape(body)
-            # 1000 is maximum short_body size in DB.
-            if len(body) > 1000:
-                new_short_body = body[:1000 - 5] + "..."
-            else:
-                new_short_body = body
-            self.cleaned_data['short_body'] = new_short_body
             self.cleaned_data['processed_short_body'] = SingleTagProcessor.process(new_short_body).replace("\r\n", "<br>")
+
 
     def process_body(self):
         body = self.cleaned_data['body']
         new_body = escape(body)
-        self.cleaned_data['body'] = new_body
+        # self.cleaned_data['body'] = body
         self.cleaned_data['processed_body'] = SingleTagProcessor.process(new_body).replace("\r\n", "<br>")
         print()
 

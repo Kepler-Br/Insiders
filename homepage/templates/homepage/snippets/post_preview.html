@@ -4,17 +4,19 @@
             <div class="media">
                 <img class="rounded-circle account-img" style="width:50px; height:50px;" src="{{ profile.image.url }}">
                 <div class="media-body">
+
+                    <div class="container" style="padding-right:0%">
+                        <span class="account-heading">{{ post.author.username }}</span>
+                        <span class="text-secondary">{{post.author.first_name}} {{post.author.last_name}}</span>
+                        <span class="float-right text-secondary">{{ post.date_pub|date:"Y F d ‒ H:m " }}</span>
+                    </div>
                     {% if post.author == user %}
-                    <div class="container">
-                        <a class="float-right text-danger" href="{% url 'post_delete' post.slug %}">Delete </a>
-                        <a class="float-right" href="{% url 'post_edit' post.slug %}" style="padding-right: 1%;">Edit</a>
+                    <div class="container" style="padding-right:0%">
+                        <a class="float-right text-danger" href="{% url 'post_delete' post.slug %}">Delete</a>
+                        <a class="float-right" href="{% url 'post_edit' post.slug %}"
+                           style="padding-right: 0%; margin-right:1%;">Edit</a>
                     </div>
                     {% endif %}
-                    <div class="container">
-                        <span class="account-heading" style="display: block;">{{ post.author.username }}</span>
-                        <span class="text-secondary">{{post.author.first_name}} {{post.author.last_name}}</span>
-                        <span class="float-right text-secondary" >{{ post.date_pub|date:"F d, Y" }}</span>
-                    </div>
                 </div>
             </div>
         </div>
@@ -22,12 +24,22 @@
             <div class="media-body">
                 <h3 class="account-heading">{{post.title}}</h3>
                 <hr class="style1">
-                <div class="card-text text-justify">{{ post.processed_short_body|safe }}</div>
-
+                {% if post.processed_short_body %}
+                    <div class="card-text text-justify">{{ post.processed_short_body|safe }}</div>
+                {% else %}
+                    <div class="card-text text-justify">{{ post.processed_body|safe|truncatewords:100 }}</div>
+                {% endif %}
+                {% if not post.processed_short_body %}
+                    <a href="{% url 'post_view' post.slug %}">See full post</a>
+                {% endif %}
             </div>
         </div>
         <div class="card-footer">
-            <a href="{% url 'post_view' post.slug %}">See full post</a>
+
+            <div>
+                <span>Tags: </span>
+                {{ post.post_tags }}
+            </div>
         </div>
     </div>
 </div>
