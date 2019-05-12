@@ -98,7 +98,7 @@ class UserHomepageEdit(View):
 
 class CurrentUserHomepage(View):
     def get(self, request):
-        posts = Post.objects.filter(author=request.user)
+        posts = Post.objects.filter(author=request.user).order_by('-date_pub')
         context = {"posts": posts, "profile": request.user.profile}
         return render(request, "users/homepage.html", context=context)
 
@@ -106,7 +106,7 @@ class CurrentUserHomepage(View):
 class UserHomepage(View):
     def get(self, request, user_slug):
         user = User.objects.get(username=user_slug)
-        posts = Post.objects.filter(author=user).order_by('date_pub')
+        posts = Post.objects.filter(author=user).order_by('-date_pub')
         context = {"posts": posts, "profile": user.profile}
         return render(request, "users/homepage.html", context=context)
 
