@@ -7,7 +7,7 @@
                         {% if user == profile.user %}
                             <a class="float-right" href="{% url 'homepage_edit' %}">Edit</a>
                         {% endif %}
-                        <h2 class="account-heading">{{ profile.user.username }}</h2>
+                        <h2 class="account-heading text-capitalize">{{ profile.user.username }}</h2>
                         <div class="container">
                             <span class="text-secondary">{{ profile.user.first_name }} {{ profile.user.last_name }}</span>
                         </div>
@@ -20,10 +20,10 @@
         <div class="card-body">
             <div class="media-body">
                 <div class="row">
-                    <div class="col-md-1">
+                    <div class="col-s-2 col-md-1">
                         <span class="text-secondary">Gender: </span>
                     </div>
-                    <div class="col-md-11">
+                    <div class="col-s-10 col-md-11">
                         <span class="card-text">{{ profile.get_gender_display }}</span>
                     </div>
                 </div>

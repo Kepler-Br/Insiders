@@ -73,6 +73,18 @@ class PostEdit(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
         return False
 
 
+class PostDelete(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
+    model = Post
+    success_url = '/'
+    template_name = "homepage/delete_post.html"
+
+    def test_func(self):
+        post = self.get_object()
+        if self.request.user == post.author:
+            return True
+        return False
+
+
 # class RegistrationRequest(View):
 #     def get(self, request):
 #         return render(request, "homepage/wannain.html")
