@@ -25,19 +25,14 @@ class UserPosts(View):
         return render(request, "homepage/user_posts.html", context={"posts": posts})
 
 
-
-
-
-
-
-
-
 class ViewPost(DetailView):
     model = Post
     template_name = 'homepage/view_post.html'
     # def get(self, request, slug):
     #     post = Post.objects.get(slug=slug)
     #     return render(request, "homepage/view_post.html", context={"post": post})
+    def get_context_data(self, object):
+        return {"profile": object.author.profile, "post": object}
 
 
 class PostCreate(LoginRequiredMixin, CreateView):

@@ -146,13 +146,13 @@ class PostEditForm(forms.ModelForm):
             else:
                 new_short_body = body
             self.cleaned_data['short_body'] = new_short_body
-            self.cleaned_data['processed_short_body'] = SingleTagProcessor.process(new_short_body)
+            self.cleaned_data['processed_short_body'] = SingleTagProcessor.process(new_short_body).replace("\r\n", "<br>")
 
     def process_body(self):
         body = self.cleaned_data['body']
         new_body = escape(body)
         self.cleaned_data['body'] = new_body
-        self.cleaned_data['processed_body'] = SingleTagProcessor.process(new_body)
+        self.cleaned_data['processed_body'] = SingleTagProcessor.process(new_body).replace("\r\n", "<br>")
         print()
 
     def clean(self):

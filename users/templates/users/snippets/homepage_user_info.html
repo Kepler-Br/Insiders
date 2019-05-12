@@ -2,17 +2,17 @@
     <div class="card">
         <div class="card-header">
                 <div class="media">
-                    <img class="rounded-circle account-img" style="width:100px; height:100px; margin-right: 2%" src="{{ user.profile.image.url }}">
+                    <img class="rounded-circle account-img" style="width:100px; height:100px; margin-right: 2%" src="{{ profile.image.url }}">
                     <div class="media-body">
                         {% if user == profile.user %}
                             <a class="float-right" href="{% url 'homepage_edit' %}">Edit</a>
                         {% endif %}
-                        <h2 class="account-heading">{{ user.username }}</h2>
+                        <h2 class="account-heading">{{ profile.user.username }}</h2>
                         <div class="container">
-                            <span class="text-secondary">{{user.first_name}} {{user.last_name}}</span>
+                            <span class="text-secondary">{{ profile.user.first_name }} {{ profile.user.last_name }}</span>
                         </div>
                         <div class="container">
-                        <span class="text-secondary">{{user.profile.status}}</span>
+                        <span class="text-secondary">{{ profile.status }}</span>
                     </div>
                 </div>
             </div>
@@ -24,7 +24,7 @@
                         <span class="text-secondary">Gender: </span>
                     </div>
                     <div class="col-md-11">
-                        <span class="card-text">{{ user.profile.get_gender_display }}</span>
+                        <span class="card-text">{{ profile.get_gender_display }}</span>
                     </div>
                 </div>
                 <div>
@@ -35,7 +35,7 @@
                         <span class="text-secondary">About: </span>
                     </div>
                     <div class="col-md-11">
-                        <span class="card-text">{{ user.profile.about }}</span>
+                        <div class="card-text text-justify">{{ profile.about }}</div>
                     </div>
                 </div>
             </div>

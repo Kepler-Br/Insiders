@@ -61,3 +61,6 @@ target/
 venv/
 .idea/
 key.txt
+.directory
+*/migrations/
+db.sqlite3
