@@ -1,0 +1,9 @@
+.insider-nav-bar
+{
+    min-height: 4rem;
+    position: sticky;
+    top: 0;
+    z-index: 1071;
+}
+
+
