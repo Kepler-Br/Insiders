@@ -10,7 +10,7 @@
                         <span class="text-secondary">{{post.author.first_name}} {{post.author.last_name}}</span>
                         <span class="float-right text-secondary">{{ post.date_pub|date:"Y F d ‒ H:m " }}</span>
                     </div>
-                    {% if post.author == user %}
+                    {% if post.author == user or user.is_stuff %}
                     <div class="container" style="padding-right:0%">
                         <a class="float-right text-danger" href="{% url 'post_delete' post.slug %}">Delete</a>
                         <a class="float-right" href="{% url 'post_edit' post.slug %}"
