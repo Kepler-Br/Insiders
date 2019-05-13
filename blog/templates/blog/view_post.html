@@ -2,14 +2,18 @@
 {% load static %}
 
 {% block title %}
-User post - {{ block.super }}
+    User post - {{ block.super }}
+{% endblock %}
+
+{% block page_description %}
+    {{ post.processed_short_body }}
 {% endblock %}
 
 {% block includes %}
-<link rel="stylesheet" href="{% static 'css/user_post.css' %}">
+    <link rel="stylesheet" href="{% static 'css/user_post.css' %}">
 {% endblock %}
 
-{% block content %}
+{% block page-content %}
 <div class="container">
     <div class="card">
         <div class="card-header">

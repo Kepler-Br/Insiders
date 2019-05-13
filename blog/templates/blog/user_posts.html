@@ -2,14 +2,14 @@
 {% load static %}
 
 {% block title %}
-User posts - {{ block.super }}
+    User posts - {{ block.super }}
 {% endblock %}
 
 {% block includes %}
     <link rel="stylesheet" href="{% static 'css/user_post.css' %}">
 {% endblock %}
 
-{% block content %}
+{% block page-content %}
     {% if posts|length == 0 %}
 <div class="post_card" style="padding: 1%; width: 70%; margin: auto">
     <div class="card user_post" style="padding: 1%;">

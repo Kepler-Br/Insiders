@@ -5,7 +5,7 @@ from django.core.exceptions import ObjectDoesNotExist
 from .forms import *
 from .models import *
 from django.http import HttpResponseForbidden
-from homepage.models import Post
+from blog.models import Post
 
 # Create your views here.
 

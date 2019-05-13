@@ -22,12 +22,12 @@ from django.views.generic import (
 class UserPosts(View):
     def get(self, request, user_slug):
         posts = Post.objects.all()
-        return render(request, "homepage/user_posts.html", context={"posts": posts})
+        return render(request, "blog/user_posts.html", context={"posts": posts})
 
 
 class ViewPost(DetailView):
     model = Post
-    template_name = 'homepage/view_post.html'
+    template_name = 'blog/view_post.html'
     # def get(self, request, slug):
     #     post = Post.objects.get(slug=slug)
     #     return render(request, "homepage/view_post.html", context={"post": post})
@@ -38,7 +38,7 @@ class ViewPost(DetailView):
 class PostCreate(LoginRequiredMixin, CreateView):
     model = Post
     form_class = PostForm
-    template_name = 'homepage/new_post.html'
+    template_name = 'blog/new_post.html'
 
     def form_valid(self, form):
         form.instance.author = self.request.user
@@ -49,7 +49,7 @@ class PostEdit(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = Post
     form_class = PostEditForm
     # fields = ["title", "short_body", "body", "post_tags"]
-    template_name = 'homepage/new_post.html'
+    template_name = 'blog/new_post.html'
 
     # def get(self, request):
     #     form = PostForm()
@@ -76,7 +76,7 @@ class PostEdit(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
 class PostDelete(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     model = Post
     success_url = '/'
-    template_name = "homepage/delete_post.html"
+    template_name = "blog/delete_post.html"
 
     def test_func(self):
         post = self.get_object()
@@ -92,4 +92,4 @@ class PostDelete(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
 
 def view_post_tags(request):
     tags = PostTag.objects.all()
-    return render(request, "homepage/view_tags.html", context={"tags": tags})
+    return render(request, "blog/view_tags.html", context={"tags": tags})

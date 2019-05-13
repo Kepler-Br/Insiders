@@ -2,7 +2,11 @@
 {% load static %}
 
 {% block title %}
-User posts - {{ block.super }}
+    User posts - {{ block.super }}
+{% endblock %}
+
+{% block page_description %}
+    {{ profile.user.username }} home page.
 {% endblock %}
 
 {% block includes %}
@@ -34,7 +38,7 @@ User posts - {{ block.super }}
             <!--</div>-->
             <!--{% endif %}-->
             {% for post in posts %}
-                {% include "homepage/snippets/post_preview.html" %}
+                {% include "blog/snippets/post_preview.html" %}
             {% endfor %}
         </div>
     </div>
