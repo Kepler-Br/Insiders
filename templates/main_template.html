@@ -5,6 +5,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="author" content="Barrett Kepler">
+    {% block page_description %}
+    <meta name="description"
+          content="Insiders - social network for really close ones. (Only for creator T_T)">
+    {% endblock %}
     <title>
         {% block title %}
         Insider
@@ -25,7 +30,7 @@
         {% include "side_bar.html" %}
         <main class="col-12 col-md-9 col-xl-8 py-md-3 pl-md-5 bd-content" role="main">
             {% block page-content %}
-                <h1>If you see this, you shouldn't.</h1>
+            <h1>If you see this, you shouldn't.</h1>
             {% endblock %}
         </main>
     </div>
