@@ -2,14 +2,14 @@
 {% load static %}
 
 {% block title %}
-Tag list - {{ block.super }}
+    Tag list - {{ block.super }}
 {% endblock %}
 
 {% block includes %}
     <link rel="stylesheet" href="{% static 'css/user_post.css' %}">
 {% endblock %}
 
-{% block content %}
+{% block page-content %}
     {% for tag in tags %}
         <a class="tag_link" href="#">#{{ tag.tag_name }}</a>
     {% endfor %}

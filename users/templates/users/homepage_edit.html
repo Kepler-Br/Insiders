@@ -3,7 +3,11 @@
 {% load crispy_forms_tags %}
 
 {% block title %}
-User posts - {{ block.super }}
+    Edit home page - {{ block.super }}
+{% endblock %}
+
+{% block page_description %}
+    Edit {{ profile.user.username }} page.
 {% endblock %}
 
 {% block includes %}
