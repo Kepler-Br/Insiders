@@ -16,10 +16,11 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from django.urls import include
-from django.views.generic.base import RedirectView
+from django.views.generic import TemplateView
 from django.contrib.auth.decorators import login_required
 
 urlpatterns = [
+    path('about/', TemplateView.as_view(template_name='about.html'), name="about_page"),
     path('', include('blog.urls')),
     path('', include('bookmarks.urls')),
     path('', include('users.urls')),
