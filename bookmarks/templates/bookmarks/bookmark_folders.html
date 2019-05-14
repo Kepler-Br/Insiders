@@ -2,28 +2,33 @@
 {% load static %}
 
 {% block title %}
-User posts - {{ block.super }}
+    User posts - {{ block.super }}
 {% endblock %}
 
 {% block page_description %}
-{{ profile.user.username }} home page.
+    {{ profile.user.username }} home page.
 {% endblock %}
 
-{% block includes %}
-<link rel="stylesheet" href="{% static 'css/user_post.css' %}">
-{% endblock %}
+
 
 {% block page-content %}
-
-{% include "users/snippets/homepage_user_info.html" %}
-
 <div class="container">
     <div class="row">
-        <div class="col-md-8" style="padding-left:4px;">
+        <!--<div class="col-md-8" style="padding-left:4px;">-->
             {% for folder in folders %}
-                {{ folder.title }}
-            {% endfor %}
-        </div>
+        <a href="#" style="text-decoration: inherit; color: inherit;">
+            <div class="card" style="width: 18rem;">
+                <img src="..." class="card-img-top" alt="...">
+                <div class="card-body">
+                    <h5 class="card-title">{{ folder.title }}</h5>
+                    <!--<p class="card-text " style="overflow: hidden; height: 10rem;"></p>-->
+                    <div class="insider-preview-bookmark-text"><span>{{ folder.description }}</span></div>
+                </div>
+            </div>
+            </a>
+        {% endfor %}
+        <!--</div>-->
+
     </div>
 </div>
 {% endblock %}

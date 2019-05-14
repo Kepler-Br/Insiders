@@ -2,7 +2,7 @@
 
 <header class="navbar navbar-expand navbar-dark flex-column flex-md-row bd-navbar insider-nav-bar"
         style="background-color: #475c4d;">
-    <a class="navbar-brand mr-0 mr-md-2" href="/" aria-label="Bootstrap">
+    <a class="navbar-brand mr-0 mr-md-2" href="{% url 'user_home' user.username %}" aria-label="Bootstrap">
         <img class="navbar-brand " src="{% static 'images/logo.png' %}" onerror="{% static 'images/favicon.ico' %}">
     </a>
     <div class="navbar-nav-scroll">
@@ -32,7 +32,7 @@
 
     <ul class="navbar-nav  ml-md-auto">
         <li class="nav-item">
-            <a href="{% url 'homepage' %}">
+            <a href="{% url 'user_home' user.username %}">
             <img class="rounded-circle account-img" style="width:40px; height:40px; margin-right: 2%"
                  src="{{ user.profile.image.url }}">
                 </a>
@@ -45,7 +45,7 @@
                     {{ user.username }}
                 </div>
                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                    <a class="dropdown-item" href="{% url 'homepage' %}">Home</a>
+                    <a class="dropdown-item" href="{% url 'user_home' user.username %}">Home</a>
                     <a class="dropdown-item" href="{% url 'homepage_edit' %}">Edit</a>
                     <hr style="margin:0px;">
                     <a class="dropdown-item" href="{% url 'logout_page' %}">Logout</a>
