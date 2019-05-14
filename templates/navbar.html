@@ -1,29 +1,57 @@
 {% load static %}
 
-<header class="navbar navbar-expand navbar-dark flex-column flex-md-row bd-navbar insider-nav-bar" style="background-color: #475c4d;">
+<header class="navbar navbar-expand navbar-dark flex-column flex-md-row bd-navbar insider-nav-bar"
+        style="background-color: #475c4d;">
     <a class="navbar-brand mr-0 mr-md-2" href="/" aria-label="Bootstrap">
         <img class="navbar-brand " src="{% static 'images/logo.png' %}" onerror="{% static 'images/favicon.ico' %}">
     </a>
     <div class="navbar-nav-scroll">
         <ul class="navbar-nav bd-navbar-nav flex-row">
             {% if user.is_authenticated %}
-                <li class="nav-item">
-                    <a class="nav-link" href="/">Home</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'logout_page' %}">Logout</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'post_create' %}">Make a post</a>
-                </li>
+            <!--<li class="nav-item">-->
+            <!--<a class="nav-link" href="/">Home</a>-->
+            <!--</li>-->
+            <!--<li class="nav-item">-->
+                <!--<a class="nav-link" href="{% url 'logout_page' %}">Logout</a>-->
+            <!--</li>-->
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'post_create' %}">Make a post</a>
+            </li>
             {% else %}
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'login_page' %}">Login</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'request_invite_page' %}">Request invite link</a>
-                </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'login_page' %}">Login</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'request_invite_page' %}">Request invite link</a>
+            </li>
             {% endif %}
         </ul>
+
     </div>
+    {% if user.is_authenticated %}
+
+    <ul class="navbar-nav  ml-md-auto">
+        <li class="nav-item">
+            <a href="{% url 'homepage' %}">
+            <img class="rounded-circle account-img" style="width:40px; height:40px; margin-right: 2%"
+                 src="{{ user.profile.image.url }}">
+                </a>
+        </li>
+        <li class="nav-item">
+            <!--<a class="nav-link" href="{% url 'request_invite_page' %}" style="color: white;">{{ user.username }}</a>-->
+            <div class="dropdown nav-link">
+                <div class="dropdown-toggle" id="dropdownMenuButton" data-toggle="dropdown"
+                     aria-haspopup="true" aria-expanded="false" style="color: white;">
+                    {{ user.username }}
+                </div>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <a class="dropdown-item" href="{% url 'homepage' %}">Home</a>
+                    <a class="dropdown-item" href="{% url 'homepage_edit' %}">Edit</a>
+                    <hr style="margin:0px;">
+                    <a class="dropdown-item" href="{% url 'logout_page' %}">Logout</a>
+                </div>
+            </div>
+        </li>
+    </ul>
+    {% endif %}
 </header>

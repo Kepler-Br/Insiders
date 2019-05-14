@@ -28,7 +28,7 @@
                 {% else %}
                     <div class="card-text text-justify">{{ post.processed_body|safe|truncatewords:100 }}</div>
                 {% endif %}
-                {% if not post.processed_short_body %}
+                {% if post.processed_short_body %}
                     <a href="{% url 'post_view' post.slug %}">See full post</a>
                 {% endif %}
             </div>
@@ -39,7 +39,7 @@
                 <span>Tags: </span>
                 {{ post.post_tags }}
                 {% if post.post_tags|length == 0 %}
-                    no tags .
+                    no tags.
                 {% endif %}
             </div>
         </div>
