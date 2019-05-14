@@ -1,0 +1,29 @@
+{% extends "main_template.html" %}
+{% load static %}
+
+{% block title %}
+User posts - {{ block.super }}
+{% endblock %}
+
+{% block page_description %}
+{{ profile.user.username }} home page.
+{% endblock %}
+
+{% block includes %}
+<link rel="stylesheet" href="{% static 'css/user_post.css' %}">
+{% endblock %}
+
+{% block page-content %}
+
+{% include "users/snippets/homepage_user_info.html" %}
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-8" style="padding-left:4px;">
+            {% for folder in folders %}
+                {{ folder.title }}
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}
