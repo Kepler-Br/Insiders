@@ -19,8 +19,7 @@
         <div class="card-header">
             <div class="media">
                 <a href="{% url 'user_home' profile.user.username %}" style="padding-right: 2%;">
-                    <img class="rounded-circle account-img" style="width:100px; height:100px; margin-right: 2%"
-                         src="{{ profile.image.url }}">
+                    <div class="user-avatar" style="width:100px; height:100px; margin-right: 2%; background-image: url({{ profile.image.url }});"></div>
                 </a>
                 <div class="media-body">
                     {% if user == post.author %}

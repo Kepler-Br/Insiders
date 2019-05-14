@@ -28,3 +28,8 @@
 {
     padding-top: 100px;
 }
+
+.user-avatar
+{
+    border-radius: 50%!important;margin-right: 2%;background-size: cover;background-position: center center;background-repeat: no-repeat;
+}

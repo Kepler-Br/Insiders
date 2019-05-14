@@ -1,0 +1,42 @@
+{% extends "main_template.html" %}
+{% load static %}
+
+{% block title %}
+About page - {{ block.super }}
+{% endblock %}
+
+{% block page-content %}
+<div class="card">
+    <div class="card-body" style="padding: 1%;">
+        <div style="text-align: center;">
+            <h1>Well, hello.</h1>
+            <h3>Thank you for visiting "about" page.</h3>
+        </div>
+        First of all, I want to thank my <span class="text-success">friend</span> for giving me server and domain for my
+        needs.
+        <br/>
+        Second, I'd like to thank another <span class="text-primary">two friends</span> for support during
+        creation of this project.
+        <br/>
+        Yeah, this project is far from complete, fully functional site, but, at least it works!
+        <br/>
+        <div class="">
+            <h3 style="text-align: center;">So, what's inside?</h3>
+        </div>
+        Inside are Python 3, Django, Nginx, Gunicorn.
+        <br/>
+        Design was strongly inspired from <a href="https://deviantart.com" class="text-success">DeviantArt.com</a>(link). Its
+        design is far better than templated white-blue color pallet that used in numerous sites.
+        <br/>
+        Here's are completed features:
+        <br/>
+        <ul>
+            <li>Registration;</li>
+            <li>Invite links generations;</li>
+            <li>Post editing/creation/deletion;</li>
+            <li>Profile information/editing;</li>
+            <li>Custom tags processing; You can insert Youtube videos in your posts!</li>
+        </ul>
+    </div>
+</div>
+{% endblock %}
