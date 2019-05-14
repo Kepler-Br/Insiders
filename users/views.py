@@ -89,7 +89,7 @@ class UserHomepageEdit(View):
         if user_form.is_valid() and profile_form.is_valid():
             user_form.save()
             profile_form.save()
-            return redirect("homepage")
+            return redirect("user_home", user_slug=request.user.username)
         else:
             context = {"user_form": user_form,
                        "profile_form": profile_form}
