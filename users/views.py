@@ -96,12 +96,12 @@ class UserHomepageEdit(View):
             return render(request, self.template_name, context=context)
 
 
-class CurrentUserHomepage(View):
-    def get(self, request):
-        posts = Post.objects.filter(author=request.user).order_by('-date_pub')
-        count = {"posts": Post.objects.count()}
-        context = {"posts": posts, "profile": request.user.profile, "media_count": count}
-        return render(request, "users/homepage.html", context=context)
+# class CurrentUserHomepage(View):
+#     def get(self, request):
+#         posts = Post.objects.filter(author=request.user).order_by('-date_pub')
+#         count = {"posts": Post.objects.count()}
+#         context = {"posts": posts, "profile": request.user.profile, "media_count": count}
+#         return render(request, "users/homepage.html", context=context)
 
 
 class UserHomepage(View):

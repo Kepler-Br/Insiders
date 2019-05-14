@@ -24,7 +24,7 @@ urlpatterns = [
     path('', include('bookmarks.urls')),
     path('', include('users.urls')),
     path('admin/', admin.site.urls),
-    path('', RedirectView.as_view(url='home')),
+    # path('', RedirectView.as_view(pattern_name='user_home', permanent=False, initkwargs={"user_slug": }), name="root_address"),
 ]
 
 

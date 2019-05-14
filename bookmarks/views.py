@@ -7,7 +7,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 # Create your views here.
 
 
-class UserBookmarksFolders(LoginRequiredMixin, UserPassesTestMixin, View):
+class UserBookmarksFolders(LoginRequiredMixin, View):
     def get(self, request, user_slug):
         user = User.objects.get(username=user_slug)
         bookmark_folders = BookmarkFolder.objects.filter(author=user)

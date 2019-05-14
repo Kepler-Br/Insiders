@@ -4,6 +4,7 @@ from django.urls import path
 from . import views
 from django.contrib.auth import views as auth_views
 from django.contrib.auth.decorators import login_required
+# from django.views.generic import RedirectView
 
 
 urlpatterns = [
@@ -13,7 +14,7 @@ urlpatterns = [
     path('login', auth_views.LoginView.as_view(template_name="users/login.html"), name="login_page"),
     path('home/edit', login_required(views.UserHomepageEdit.as_view()), name="homepage_edit"),
     path('user/<str:user_slug>', login_required(views.UserHomepage.as_view()), name="user_home"),
-    path('home', login_required(views.CurrentUserHomepage.as_view()), name="homepage"),
+    # path('home', RedirectView.as_view(pattern_name='user_home', permanent=False), name="homepage"),
 ]
 
 if settings.DEBUG:
