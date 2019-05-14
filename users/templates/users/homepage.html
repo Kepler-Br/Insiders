@@ -2,15 +2,15 @@
 {% load static %}
 
 {% block title %}
-    User posts - {{ block.super }}
+User posts - {{ block.super }}
 {% endblock %}
 
 {% block page_description %}
-    {{ profile.user.username }} home page.
+{{ profile.user.username }} home page.
 {% endblock %}
 
 {% block includes %}
-    <link rel="stylesheet" href="{% static 'css/user_post.css' %}">
+<link rel="stylesheet" href="{% static 'css/user_post.css' %}">
 {% endblock %}
 
 {% block page-content %}
@@ -20,26 +20,26 @@
 <div class="container">
     <div class="row">
         <div class="col-md-4" style="padding-top: 0%; padding-right:4px;">
-            {% include "users/snippets/homepage_user_actions.html" %}
+            <!--{% include "users/snippets/homepage_user_actions.html" %}-->
             {% include "users/snippets/homepage_user_media.html" %}
             {% include "users/snippets/homepage_user_friends.html" %}
         </div>
         <div class="col-md-8" style="padding-left:4px;">
-            <!--{% if posts|length == 0 %}-->
-                <!--<div class="card">-->
-                    <!--<div class="card-body">-->
-                        <!--<div class="media-body">-->
-                            <!--<span class="card-text">No posts here.</span>-->
-                            <!--{% if profile.user == user %}-->
-                                <!--<a href="{% url 'post_create' %}">Create</a>-->
-                            <!--{% endif %}-->
-                    <!--</div>-->
-                <!--</div>-->
-            <!--</div>-->
-            <!--{% endif %}-->
             {% for post in posts %}
                 {% include "blog/snippets/post_preview.html" %}
             {% endfor %}
+            {% if posts|length == 0 %}
+                <div style="padding-top: 1%;">
+                    <div class="card">
+                        <div class="card-header">
+                            <span>No posts out there.</span>
+                            {% if profile.user == user %}
+                                <a href="{% url 'post_create' %}">Create?</a>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
         </div>
     </div>
 </div>

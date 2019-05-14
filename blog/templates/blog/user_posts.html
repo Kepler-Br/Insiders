@@ -11,18 +11,18 @@
 
 {% block page-content %}
     {% if posts|length == 0 %}
-<div class="post_card" style="padding: 1%; width: 70%; margin: auto">
-    <div class="card user_post" style="padding: 1%;">
-        <p>This user is not very active.</p>
-        <p>Perhabs, you should check his/her/it <a href=""> homepage</a></p>
-        <div>
-           <audio controls preload="metadata" style=" width:300px;">
-	            <source src="{% static 'music/test.mp3' %}" type="audio/mpeg">
-	                Your browser does not support the audio element.
-            </audio>
+        <div class="post_card" style="padding: 1%; width: 70%; margin: auto">
+            <div class="card user_post" style="padding: 1%;">
+                <p>This user is not very active.</p>
+                <p>Perhabs, you should check his/her/it <a href=""> homepage</a></p>
+                <div>
+                   <audio controls preload="metadata" style=" width:300px;">
+                        <source src="{% static 'music/test.mp3' %}" type="audio/mpeg">
+                            Your browser does not support the audio element.
+                    </audio>
+                </div>
+            </div>
         </div>
-    </div>
-</div>
     {% endif %}
     {% for post in posts %}
         <div class="post_card" style="padding: 1%; width: 70%; margin: auto">

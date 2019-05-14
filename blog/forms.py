@@ -89,7 +89,7 @@ class PostForm(forms.ModelForm):
     def process_short_body(self):
         short_body = self.cleaned_data['short_body']
         if short_body:
-            self.cleaned_data['short_body'] = short_body
+            # self.cleaned_data['short_body'] = short_body
             new_short_body = escape(short_body)
             self.cleaned_data['processed_short_body'] = SingleTagProcessor.process(new_short_body).replace("\r\n", "<br>")
         else:

@@ -10,25 +10,26 @@
             </div>
         </div>
         <div class="card-body">
-            <!--<div class="media-body">-->
-            <ul class="nav flex-column">
-                <li class="nav-item">
-
-                    <a class="nav-link sidebar_element" href="{% url 'homepage' %}"><span class="badge badge-secondary ">{{media_count.posts}}</span> Posts</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link sidebar_element" href="{% url 'homepage' %}"><span class="badge badge-secondary ">0</span> Memes</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link sidebar_element" href="#"><span class="badge badge-secondary ">0</span> Pictures</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link sidebar_element" href="#"><span class="badge badge-secondary ">0</span> Internet places</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link sidebar_element" href="#"><span class="badge badge-secondary ">0</span> Bookmarks</a>
-                </li>
-            </ul>
+            <div class="bd-toc-item">
+                <a class="bd-toc-link insider-sidebar-element" href="/home">
+                    <span class="badge badge-info">{{ media_count.posts }}</span> Posts
+                </a>
+            </div>
+            <div class="bd-toc-item">
+                <a class="bd-toc-link insider-sidebar-element" href="/home">
+                    <span class="badge badge-info">0</span> Pictures
+                </a>
+            </div>
+            <div class="bd-toc-item">
+                <a class="bd-toc-link insider-sidebar-element" href="/home">
+                    <span class="badge badge-info">0</span> Internet places
+                </a>
+            </div>
+            <div class="bd-toc-item">
+                <a class="bd-toc-link insider-sidebar-element" href="/home">
+                    <span class="badge badge-info">0</span> Bookmarks
+                </a>
+            </div>
             <!--</div>-->
         </div>
     </div>
