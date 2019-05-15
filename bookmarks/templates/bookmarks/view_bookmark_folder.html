@@ -13,41 +13,38 @@ User posts - {{ block.super }}
 {% block page-content %}
 <div class="container">
     <div class="row">
-        {% if user == author %}
-        <a class="card insider-new-folder" href="{% url 'user_bookmark_folder_create' %}" style="margin: 3px;">
+        {% if user == folder.author %}
+        <a class="card insider-new-folder" href="{% url 'user_bookmark_create' %}" style="margin: 3px;">
             <!--<div class="card" style="width: 18rem;  background-color: #ccd9c8; border: 3px dashed #b3c4b4;">-->
 
             <div class="card-body">
-                <h5 class="card-title text-center">Create new folder</h5>
+                <h5 class="card-title text-center">Create new bookmark</h5>
                 <div class="insider-preview-bookmark-text"></div>
             </div>
             <!--</div>-->
         </a>
         {% endif %}
-        {% for folder in folders %}
-
+        {% for bookmark in bookmarks %}
 
         <div class="card" style="width: 18rem;">
 
 
             <!--<img src="{% static 'images/bookmark-folder.png' %}" class="card-img-top" alt="...">-->
-            <div style="width:286px; height: 115px; background-image: url({{ folder.image.url }});background-size: cover;background-position: center center; background-repeat: no-repeat;">
+            <div style="width:286px; height: 115px; background-image: url({{ bookmark.image.url }});background-size: cover;background-position: center center; background-repeat: no-repeat;">
                 <a style="float:right; padding-right: 8px; padding-top: 3px;" class="text-danger insider-update-button"
-                   href="{% url 'bookmark_folder_delete' folder.slug %}">X</a>
+                   href="{% url 'bookmark_delete' bookmark.slug %}">X</a>
                 <a style="float:right; padding-right: 8px; padding-top: 3px;" class="text-info insider-update-button"
-                   href="{% url 'bookmark_folder_edit' folder.slug %}">E</a>
+                   href="{% url 'bookmark_edit' bookmark.slug %}">E</a>
 
             </div>
-            <a href="{% url 'bookmark_folder' folder.slug %}" style="text-decoration: inherit; color: inherit;">
+            <a href="{% url 'bookmark' bookmark.slug %}" style="text-decoration: inherit; color: inherit;">
                 <div class="card-body" style="border: 1px solid #b3c4b3;">
-                    <h5 class="card-title">{{ folder.title }}</h5>
+                    <h5 class="card-title">{{ bookmark.title }}</h5>
                     <!--<p class="card-text " style="overflow: hidden; height: 10rem;"></p>-->
-                    <div class="insider-preview-bookmark-text"><span>{{ folder.description }}</span></div>
+                    <div class="insider-preview-bookmark-text"><span>{{ bookmark.body }}</span></div>
                 </div>
             </a>
         </div>
-
-
 
         {% endfor %}
 

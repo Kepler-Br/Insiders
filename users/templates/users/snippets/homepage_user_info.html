@@ -5,7 +5,7 @@
                     <div class="user-avatar" style="width: 100px; height: 100px; background-image: url({{ profile.image.url }});"></div>
                     <div class="media-body">
                         {% if user == profile.user %}
-                            <a class="float-right" href="{% url 'homepage_edit' %}">Edit</a>
+                            <a class="float-right insider-update-button" href="{% url 'homepage_edit' %}">Edit</a>
                         {% endif %}
                         <h2 class="account-heading text-capitalize">{{ profile.user.username }}</h2>
                         <div class="container">

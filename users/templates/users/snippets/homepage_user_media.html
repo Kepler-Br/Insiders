@@ -17,17 +17,17 @@
             </div>
             <div class="bd-toc-item">
                 <a class="bd-toc-link insider-sidebar-element" href="/home">
-                    <span class="badge badge-info">0</span> Pictures
+                    <del style="color: black;"><span class="badge badge-info">0</span> Pictures</del>
                 </a>
             </div>
             <div class="bd-toc-item">
                 <a class="bd-toc-link insider-sidebar-element" href="/home">
-                    <span class="badge badge-info">0</span> Internet places
+                    <del style="color: black;"><span class="badge badge-info">0</span> Internet places</del>
                 </a>
             </div>
             <div class="bd-toc-item">
                 <a class="bd-toc-link insider-sidebar-element" href="{% url 'user_bookmark_folders' user.username %}">
-                    <span class="badge badge-info">0</span> Bookmarks
+                    <span class="badge badge-info">{{ media_count.bookmarks }}</span> Bookmarks
                 </a>
             </div>
             <!--</div>-->

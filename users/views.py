@@ -4,6 +4,7 @@ from django.shortcuts import render, redirect
 from django.core.exceptions import ObjectDoesNotExist
 from .forms import *
 from .models import *
+from bookmarks.models import Bookmark
 from django.http import HttpResponseForbidden
 from blog.models import Post
 
@@ -108,7 +109,7 @@ class UserHomepage(View):
     def get(self, request, user_slug):
         user = User.objects.get(username=user_slug)
         posts = Post.objects.filter(author=user).order_by('-date_pub')
-        count = {"posts": Post.objects.count()}
+        count = {"posts": Post.objects.count(), "bookmarks": Bookmark.objects.filter(author=user).count()}
         context = {"posts": posts, "profile": user.profile, "media_count": count}
         return render(request, "users/homepage.html", context=context)
 
