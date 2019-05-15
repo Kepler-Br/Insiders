@@ -19,6 +19,9 @@
     <link rel="stylesheet" href="{% static 'css/bookmarkFolder.css' %}">
     <link rel="stylesheet" href="{% static 'css/users.css' %}">
     <link rel="stylesheet" href="{% static 'css/navigationbar.css' %}">
+    <link rel="stylesheet" href="{% static 'css/control-buttons.css' %}">
+    <link rel="stylesheet" href="{% static 'css/user_post.css' %}">
+
     <link rel="shortcut icon" href="{% static 'images/favicon.ico' %}"/>
 </head>
 <body style="background: #ccd9c8">
@@ -28,7 +31,7 @@
 <div class="container-fluid">
     <div class="row flex-xl-nowrap">
         {% include "side_bar.html" %}
-        <main class="col-12 col-md-9 col-xl-8 py-md-3 pl-md-5 bd-content" role="main">
+        <main class="col-12 col-md-9 col-xl-8 py-md-3 pl-md-5 bd-content" style="margin: 0 auto;" role="main">
             {% block page-content %}
                 <h1>If you see this, you shouldn't.</h1>
             {% endblock %}
