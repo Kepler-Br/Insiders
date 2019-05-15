@@ -58,13 +58,16 @@ class SingleTagProcessor:
 
 
 class PostForm(forms.ModelForm):
+    slug = forms.CharField(label="Post URL:",
+                           widget=forms.Textarea(attrs={'class': 'form-control', 'placeholder': 'Post URL (optional)'}),
+                           required=False)
+
     class Meta:
         model = Post
         fields = ["title", "slug", "short_body", "body", "post_tags", "processed_body", "processed_short_body"]
 
         widgets = {
             'title': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Post title'}),
-            'slug': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Post URL (optional)'}),
             'short_body': forms.Textarea(attrs={'class': 'form-control', 'placeholder': 'Short post body (optional)'}),
             'body': forms.Textarea(attrs={'class': 'form-control', 'placeholder': 'Post body'}),
             'post_tags': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Post tags (optional)'}),
@@ -72,13 +75,9 @@ class PostForm(forms.ModelForm):
             'processed_short_body': forms.HiddenInput(),
         }
 
-    def __init__(self, *args, **kwargs):
-        super(PostForm, self).__init__(*args, **kwargs)
-        self.fields['slug'].required = False
-
     def clean_slug(self):
         new_slug = slugify(self.cleaned_data['slug'])
-        timestamp = int(time.time()*1e6)
+        timestamp = int(time.time() * 1e6)
         timestamp_bytes = timestamp.to_bytes((timestamp.bit_length() + 7) // 8, byteorder='big')
         timestamp_base64_str = base64.b64encode(timestamp_bytes).decode('utf-8').replace('=', '')
         if len(new_slug) == 0:
@@ -91,7 +90,8 @@ class PostForm(forms.ModelForm):
         if short_body:
             # self.cleaned_data['short_body'] = short_body
             new_short_body = escape(short_body)
-            self.cleaned_data['processed_short_body'] = SingleTagProcessor.process(new_short_body).replace("\r\n", "<br>")
+            self.cleaned_data['processed_short_body'] = SingleTagProcessor.process(new_short_body).replace("\r\n",
+                                                                                                           "<br>")
         else:
             self.cleaned_data['processed_short_body'] = short_body
 
@@ -129,8 +129,8 @@ class PostEditForm(forms.ModelForm):
         if short_body:
             self.cleaned_data['short_body'] = short_body
             new_short_body = escape(short_body)
-            self.cleaned_data['processed_short_body'] = SingleTagProcessor.process(new_short_body).replace("\r\n", "<br>")
-
+            self.cleaned_data['processed_short_body'] = SingleTagProcessor.process(new_short_body).replace("\r\n",
+                                                                                                           "<br>")
 
     def process_body(self):
         body = self.cleaned_data['body']
