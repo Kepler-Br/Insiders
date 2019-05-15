@@ -18,3 +18,11 @@
   transform: translateY(calc(-100% + 100px));
   transition: 5000ms all 300ms linear;
 }
+
+.insider-new-folder {
+    width: 18rem;
+    background-color: #ccd9c8;
+    border: 3px dashed #b3c4b4;
+    text-decoration: inherit;
+    color: inherit;
+}

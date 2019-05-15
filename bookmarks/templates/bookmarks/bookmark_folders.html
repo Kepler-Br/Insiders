@@ -2,32 +2,40 @@
 {% load static %}
 
 {% block title %}
-    User posts - {{ block.super }}
+User posts - {{ block.super }}
 {% endblock %}
 
 {% block page_description %}
-    {{ profile.user.username }} home page.
+{{ profile.user.username }} home page.
 {% endblock %}
-
 
 
 {% block page-content %}
 <div class="container">
     <div class="row">
-        <!--<div class="col-md-8" style="padding-left:4px;">-->
-            {% for folder in folders %}
-        <a href="#" style="text-decoration: inherit; color: inherit;">
-            <div class="card" style="width: 18rem;">
-                <img src="..." class="card-img-top" alt="...">
-                <div class="card-body">
-                    <h5 class="card-title">{{ folder.title }}</h5>
-                    <!--<p class="card-text " style="overflow: hidden; height: 10rem;"></p>-->
-                    <div class="insider-preview-bookmark-text"><span>{{ folder.description }}</span></div>
+        {% if user == author %}
+            <a class="card insider-new-folder" href="{% url 'user_bookmark_folder_create' %}">
+                <!--<div class="card" style="width: 18rem;  background-color: #ccd9c8; border: 3px dashed #b3c4b4;">-->
+
+                    <div class="card-body">
+                        <h5 class="card-title text-center">Create new folder</h5>
+                        <div class="insider-preview-bookmark-text"></div>
+                    </div>
+                <!--</div>-->
+            </a>
+        {% endif %}
+        {% for folder in folders %}
+            <a href="#" style="text-decoration: inherit; color: inherit; padding: 0.5%;">
+                <div class="card" style="width: 18rem;">
+                    <img src="..." class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ folder.title }}</h5>
+                        <!--<p class="card-text " style="overflow: hidden; height: 10rem;"></p>-->
+                        <div class="insider-preview-bookmark-text"><span>{{ folder.description }}</span></div>
+                    </div>
                 </div>
-            </div>
             </a>
         {% endfor %}
-        <!--</div>-->
 
     </div>
 </div>
