@@ -48,6 +48,10 @@ class CreateBookmarkFolder(LoginRequiredMixin, CreateView):
     form_class = BookmarkFolderForm
     template_name = 'bookmarks/create_bookmark_folder.html'
 
+    def get_success_url(self):
+        folder = self.object
+        return reverse_lazy('user_bookmark_folders', kwargs={'slug': folder.author.username})
+
     def form_valid(self, form):
         form.instance.author = self.request.user
         return super().form_valid(form)
@@ -64,6 +68,10 @@ class CreateBookmark(LoginRequiredMixin, CreateView):
         form.base_fields["folder"] = forms.ModelChoiceField(queryset=folders)
         context = {"form": form}
         return render(request, "bookmarks/create_bookmark.html", context=context)
+
+    def get_success_url(self):
+        folder = self.object.folder
+        return reverse_lazy('bookmark_folder', kwargs={'slug': folder.slug})
 
     def form_valid(self, form):
         form.instance.author = self.request.user
@@ -92,20 +100,17 @@ class EditBookmark(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     template_name = 'bookmarks/bookmarks_edit_generic_page.html'
 
     def get(self, request, *args, **kwargs):
-        form = self.form_class(instance=Bookmark.objects.get(slug=kwargs["slug"]))
-        folders = BookmarkFolder.objects.filter(author=request.user)
+        bookmark = Bookmark.objects.get(slug=kwargs["slug"])
+        form = self.form_class(instance=bookmark)
+        folders = BookmarkFolder.objects.filter(author=bookmark.author)
         form.base_fields["folder"] = forms.ModelChoiceField(queryset=folders)
         context = {"form": form}
         return render(request, "bookmarks/bookmarks_edit_generic_page.html", context=context)
 
-    def post(self, request, *args, **kwargs):
-        form = self.form_class(request.POST, request.FILES, instance=Bookmark.objects.get(slug=kwargs["slug"]))
-        if form.is_valid():
-            form.save()
-            return redirect("user_home", user_slug=request.user.username)
-        else:
-            context = {"form": form}
-            return render(request, self.template_name, context=context)
+    def get_success_url(self):
+        # Assuming there is a ForeignKey from Comment to Post in your model
+        folder = self.object.folder
+        return reverse_lazy('bookmark_folder', kwargs={'slug': folder.slug})
 
     def form_valid(self, form):
         # form.instance.author = self.request.user
@@ -122,6 +127,11 @@ class EditBookmarkFolder(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = BookmarkFolder
     form_class = BookmarkFolderForm
     template_name = 'bookmarks/bookmarks_edit_generic_page.html'
+
+    def get_success_url(self):
+        # Assuming there is a ForeignKey from Comment to Post in your model
+        folder = self.object
+        return reverse_lazy('user_bookmark_folders', kwargs={'slug': folder.author.username})
 
     def form_valid(self, form):
         # form.instance.author = self.request.user
