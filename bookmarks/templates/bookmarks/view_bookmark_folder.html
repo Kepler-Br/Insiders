@@ -9,6 +9,11 @@ User posts - {{ block.super }}
 {{ profile.user.username }} home page.
 {% endblock %}
 
+{% block navbar-controls %}
+    <a class="btn btn-info" href="{% url 'user_bookmark_folders' folder.author %}">< To user bookmarks</a>
+{% endblock %}
+
+
 
 {% block page-content %}
 <div class="container">

@@ -2,15 +2,19 @@
 {% load static %}
 
 {% block title %}
-User posts - {{ block.super }}
+    {{ author.username }} bookmarks - {{ block.super }}
 {% endblock %}
 
 {% block page_description %}
-{{ profile.user.username }} home page.
+    {{ author.username }} bookmarks.
 {% endblock %}
 
+{% block navbar-controls %}
+    <a class="btn btn-info" href="{% url 'user_home' author %}">< To user home</a>
+{% endblock %}
 
 {% block page-content %}
+
 <div class="container">
     <div class="row">
         {% if user == author %}
