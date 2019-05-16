@@ -2,11 +2,12 @@
 
 <header class="navbar navbar-expand navbar-dark flex-column flex-md-row bd-navbar insider-nav-bar"
         style="background-color: #475c4d;">
-    <a class="navbar-brand mr-0 mr-md-2" href="{% url 'user_home' user.username %}" aria-label="Bootstrap">
+    <a class="navbar-brand mr-0 mr-md-2" href="{% url 'index' %}" aria-label="Bootstrap">
         <img class="navbar-brand " src="{% static 'images/logo.png' %}" onerror="{% static 'images/favicon.ico' %}">
     </a>
     <div class="navbar-nav-scroll">
         <ul class="navbar-nav bd-navbar-nav flex-row">
+
             {% if user.is_authenticated %}
             <!--<li class="nav-item">-->
             <!--<a class="nav-link" href="/">Home</a>-->
@@ -29,6 +30,7 @@
     {% if user.is_authenticated %}
 
     <ul class="navbar-nav  ml-md-auto">
+        {% if user.is_authenticated %}
         <li class="nav-item">
             <a href="{% url 'user_home' user.username %}">
                 <div class="user-avatar"
@@ -54,6 +56,13 @@
                 </div>
             </div>
         </li>
+        {% else %}
+        <li class="nav-item">
+            <a href="">
+                <div>Fuck</div>
+            </a>
+        </li>
+        {% endif %}
     </ul>
     {% endif %}
 </header>

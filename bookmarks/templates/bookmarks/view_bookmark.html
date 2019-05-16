@@ -2,13 +2,17 @@
 {% load static %}
 
 {% block title %}
-User posts - {{ block.super }}
+User bookmark - {{ block.super }}
 {% endblock %}
 
 {% block page_description %}
-{{ profile.user.username }} home page.
+Bookmark.
 {% endblock %}
 
+
+{% block navbar-controls %}
+    <a class="btn btn-info" href="{% url 'bookmark_folder' bookmark.folder.slug %}">< To parent folder</a>
+{% endblock %}
 
 {% block page-content %}
 <div class="container">

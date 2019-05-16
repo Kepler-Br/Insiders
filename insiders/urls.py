@@ -17,9 +17,10 @@ from django.contrib import admin
 from django.urls import path
 from django.urls import include
 from django.views.generic import TemplateView
-from django.contrib.auth.decorators import login_required
+from .views import RootAddress
 
 urlpatterns = [
+    path('', RootAddress.as_view(), name="index"),
     path('about/', TemplateView.as_view(template_name='about.html'), name="about_page"),
     path('', include('blog.urls')),
     path('', include('bookmarks.urls')),
