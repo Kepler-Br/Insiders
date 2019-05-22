@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'users.apps.UsersConfig',
     'bookmarks.apps.BookmarksConfig',
     'crispy_forms',
+    'rest_framework',
 ]
 
 MIDDLEWARE = [

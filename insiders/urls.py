@@ -20,6 +20,9 @@ from django.views.generic import TemplateView
 from .views import RootAddress
 
 urlpatterns = [
+    path('api/', include('blog.api.urls')),
+    path('api/', include('users.api.urls')),
+
     path('', RootAddress.as_view(), name="index"),
     path('about/', TemplateView.as_view(template_name='about.html'), name="about_page"),
     path('', include('blog.urls')),
