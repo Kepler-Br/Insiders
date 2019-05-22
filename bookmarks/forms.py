@@ -46,7 +46,6 @@ class BookmarkForm(forms.ModelForm):
     is_hidden = forms.BooleanField(label="Hide bookmark from others.",
         widget=forms.CheckboxInput(attrs={'class': 'form-check-input'}), required=False)
 
-    # folder = forms.ChoiceField(widget=forms.SelectMultiple(attrs={'class': 'form-control'}))
     folder = forms.ChoiceField(widget=forms.SelectMultiple(attrs={'class': 'form-control'}))
 
     slug = forms.CharField(widget=forms.HiddenInput(), required=False)
