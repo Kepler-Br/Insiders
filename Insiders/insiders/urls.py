@@ -27,7 +27,7 @@ urlpatterns = [
     #path('about/', TemplateView.as_view(template_name='about.html'), name="about_page"),
     #path('', include('blog.urls')),
     #path('', include('bookmarks.urls')),
-    #path('', include('users.urls')),
+    path('', include('users.urls')),
     path('admin/', admin.site.urls),
     # path('', RedirectView.as_view(pattern_name='user_home', permanent=False, initkwargs={"user_slug": }), name="root_address"),
 ]
