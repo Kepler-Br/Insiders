@@ -59,6 +59,8 @@ target/
 
 
 venv/
+node_modules/
+package-lock.json
 .idea/
 key.txt
 .directory

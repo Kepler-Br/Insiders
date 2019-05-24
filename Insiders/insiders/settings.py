@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'blog.apps.BlogConfig',
     'users.apps.UsersConfig',
     'bookmarks.apps.BookmarksConfig',
+    'frontend.apps.FrontendConfig',
     'crispy_forms',
     'rest_framework',
 ]

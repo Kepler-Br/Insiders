@@ -20,14 +20,14 @@ from django.views.generic import TemplateView
 from .views import RootAddress
 
 urlpatterns = [
-    path('api/', include('blog.api.urls')),
-    path('api/', include('users.api.urls')),
+    #path('api/', include('blog.api.urls')),
+    #path('api/', include('users.api.urls')),
 
-    path('', RootAddress.as_view(), name="index"),
-    path('about/', TemplateView.as_view(template_name='about.html'), name="about_page"),
-    path('', include('blog.urls')),
-    path('', include('bookmarks.urls')),
-    path('', include('users.urls')),
+    #path('', RootAddress.as_view(), name="index"),
+    #path('about/', TemplateView.as_view(template_name='about.html'), name="about_page"),
+    #path('', include('blog.urls')),
+    #path('', include('bookmarks.urls')),
+    #path('', include('users.urls')),
     path('admin/', admin.site.urls),
     # path('', RedirectView.as_view(pattern_name='user_home', permanent=False, initkwargs={"user_slug": }), name="root_address"),
 ]
