@@ -41,7 +41,6 @@ INSTALLED_APPS = [
     'users.apps.UsersConfig',
     'bookmarks.apps.BookmarksConfig',
     'frontend.apps.FrontendConfig',
-    'crispy_forms',
     'rest_framework',
 ]
 
